@@ -14,33 +14,47 @@ class StockController extends Controller
         // Create a new Guzzle client instance
         $client = new Client();
         $apiKey = "8QC2J7FW2O3V95BI"; // Your Alpha Vantage API Key
-        $symbol = "KO";
+        $symbol = "AAPL";
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
 
-        $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
         //max-request = 25 requests per day(modify)
         try {
-            /*
-              // Make a GET request to the OpenWeather API
-              $response = $client->get($apiUrl);
+            $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
+            $lastRequestFile = base_path('last_request_time.txt');
+            if (file_exists($lastRequestFile)) {
+                $lastRequestTime = (int)file_get_contents($lastRequestFile);
+            } else {
+                $lastRequestTime = 0; // If the file doesn't exist, set it to 0
+            }
+            $currentTime = time();
+            // Calculate the time difference in seconds (86400 seconds in a day)
+            $timeDifference = $currentTime - $lastRequestTime;
+            if ($timeDifference >= 86400) {
+                // Make a GET request
+                $response = $client->get($apiUrl);
 
-              // Get the response body as an array
-              $data = json_decode($response->getBody(), true);
+                // Get the response body as an array
+                $data = json_decode($response->getBody(), true);
 
-              $timeSeries = $data["Time Series ({$interval})"];
-              $latestTime = array_key_first($timeSeries); // Get the most recent timestamp
-              $latestData = $timeSeries[$latestTime];
-              $latestPrice = $latestData['4. close'];
-              //insert
-              $stock = Stock::updateOrCreate(
-                  [
-                      'symbol' => $symbol,
-                      'latest-price' => $latestPrice,   // Store latest price
-                      'latestTime' => $latestTime,      // Store the timestamp
-                      'latest-data' => $latestData,     // Store the entire data as JSON
-                  ]
-              );
-          */
+                $timeSeries = $data["Time Series ({$interval})"];
+                $latestTime = array_key_first($timeSeries); // Get the most recent timestamp
+                $latestData = $timeSeries[$latestTime];
+                $latestPrice = $latestData['4. close'];
+                //insert
+                $stock = Stock::updateOrCreate(
+                    [
+                        'symbol' => $symbol
+                    ],
+                    [
+                        'symbol' => $symbol,
+                        'latest-price' => $latestPrice,   // Store latest price
+                        'latestTime' => $latestTime,      // Store the timestamp
+                        'latest-data' => $latestData,     // Store the entire data as JSON
+                    ]
+                );
+                file_put_contents($lastRequestFile, $currentTime);
+            }
+
             //select all from database
             $stocksAll = Stock::all();
             $stocksAlls = array();
