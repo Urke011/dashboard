@@ -13,13 +13,13 @@
     <div>01</div>
     <div>02</div>
     <div>03</div>
-    <!-- ... -->
     <div class="">@if(isset($stocks))
             @foreach($stocks as $stock)
-                <h2>{{ $stock->symbol }} Stock Data</h2>
-                <p>Latest Price: {{ $stock->{'latest-price'} }}</p>
+                <h2>Title: {{ $stock->title }} <span><b>({{$stock->symbol}})</b></span></h2>
+                <p>Latest Price: {{ $stock->{'latest-price'} }}$</p>
                 <p>Latest Time: {{  $stock->latestTime }}</p>
                 <p>Latest Data: {{ json_encode($stock->{'latest-data'}) }}</p>
+                <hr>
             @endforeach
         @else
             <p>No stock data available.</p>
