@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('latest-price');
             $table->string('latestTime');
             $table->json('latest-data');
+            $table->string('imagePath')->nullable();
             $table->timestamps();
         });
     }

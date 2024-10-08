@@ -14,7 +14,7 @@ class StockController extends Controller
         // Create a new Guzzle client instance
         $client = new Client();
         $apiKey = "8QC2J7FW2O3V95BI"; // Your Alpha Vantage API Key
-        $symbol = "AAPL";
+        $symbol = "MSFT";
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
 
         //max-request = 25 requests per day(modify)
@@ -110,6 +110,32 @@ class StockController extends Controller
         $allSymbols = DB::table('stocks_symbols')->get();
 
         return $allSymbols;
+    }
+
+    public function imageview()
+    {
+
+        $allSymbols = DB::table('stocks_symbols')->get();
+
+        return view('imageUpload', ['allSymbols' => $allSymbols]);
+    }
+
+    public function imageStore(Request $request)
+    {
+        $request->validate([
+            'stockSymbol' => 'required',
+            'imagePath' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->imagePath->extension();
+        $request->imagePath->move(public_path('images'), $imageName);
+
+        $stock = Stock::where('symbol', $request->stockSymbol)->first();
+        if ($stock) {
+            // If the stock exists, update the imagePath
+            $stock->imagePath = $imageName;
+            $stock->save();
+        }
+        return redirect()->route('dashboard')->with('success', 'Image uploaded successfully.');
     }
 
 }

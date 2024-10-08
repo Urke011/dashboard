@@ -14,6 +14,7 @@ class Stock extends Model
         'latest-price',
         'latestTime',
         'latest-data',
+         'imagePath'
     ];
 
     // Cast the JSON field to an array

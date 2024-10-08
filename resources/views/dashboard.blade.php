@@ -19,6 +19,7 @@
                 <p>Latest Price: {{ $stock->{'latest-price'} }}$</p>
                 <p>Latest Time: {{  $stock->latestTime }}</p>
                 <p>Latest Data: {{ json_encode($stock->{'latest-data'}) }}</p>
+                <img src="{{ url('/images/' . $stock->imagePath) }}" alt="Image">
                 <hr>
             @endforeach
         @else
