@@ -1,0 +1,61 @@
+@import 'bootstrap/scss/bootstrap';
+body{
+    background-color: #000000;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dashboard-background-color{
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);  // Changed to 4 columns
+    grid-template-rows: repeat(3, 1fr);
+    background-color: #151c1d;
+    border: 1px solid #ffff;
+    height: 100vh;
+}
+.tabs-background-color{
+    background-color: #1e2228;
+}
+.grid-1{
+    grid-column: span 2;
+    grid-row: span 3;
+}
+.grid-2{
+    grid-column: 3 / 7;
+    grid-row: span 3;
+}
+.grid-3{
+    grid-column: 8 / 10;
+}
+.grid-4{
+    grid-column: 7 / 8;
+    grid-row: 1/1;
+}
+.grid-5{
+    background-color: blueviolet;
+    grid-column: 7 / 10;
+    grid-row: 2/3;
+}
+.grid-6{
+    background-color: blue;
+    grid-column: 7 / 10;
+    grid-row: 3/4;
+}
+.gold-font{
+    color: #e2b52d;
+}
+.full-height{
+    height: 100vh;
+}
+.blue-font{
+    color: #42869e;
+}
+.grau-font{
+    color: #8e959d;
+}
+.fit-content {
+    height: fit-content;
+}
+
+svg{
+    width: 1.5rem;
+}
