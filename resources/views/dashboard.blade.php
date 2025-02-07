@@ -45,30 +45,43 @@
                 </div>
 
                 <div class="grid-2 m-2">
-                    <div class="tabs-background-color p-2 m-2 rounded">
+                    <div class="tabs-background-color p-2 m-2 rounded d-flex justify-content-between">
                         <h4 class="blue-font"><strong>Tudo</strong></h4>
+                        <span class="text-white blue-font"><x-ri-todo-line/></span>
                     </div>
                     <div class="todo-card tabs-background-color  p-2 m-2 rounded">
-                        <h5 class="text-white">{{$allTodoTasks[0]['title']}}</h5>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="text-white">{{$allTodoTasks[0]['description']}} </h6>
+                        @foreach($allTodoTasks as $allTodoTask)
+                            <h5 class="text-white">{{$allTodoTask['title']}}</h5>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="text-white">{{$allTodoTask['description']}} </h6>
+                                </div>
+                                <div class="text-white">
+                                    <span><x-tabler-pencil/></span><span><x-sui-trash/></span><span><x-bi-check-circle-fill/></span>
+                                </div>
                             </div>
-                            <div class="text-white">
-                                <span><x-tabler-pencil/></span><span><x-sui-trash/></span><span><x-bi-check-circle-fill/></span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="tabs-background-color grid-3">
-                    <div class="col text-white tabs-background-color text-center fit-content rounded py-3">
+                <div class="tabs-background-color m-3 grid-3 rounded">
+                    <div class="col text-white p-2 tabs-background-color text-center fit-content rounded">
                         <p class="grau-font fs-4">{{$date}}</p>
                         <p class="gold-font display-3">
                             <time-display></time-display>
                         </p>
                         <p>Daily Weather :</p>
-                        <span class="grau-font">{{ $weatherRecords[0]->town}}&nbsp;</span>
-                        <span class="grau-font">{{ $weatherRecords[0]->weather }}&deg;</span>
+                        <div class="text-start d-flex justify-content-between">
+                            @foreach($weatherRecords as $index => $weatherRecord)
+                                <div class="weather-card d-flex border-gray">
+                                <span class="grau-font">
+                                     {{ $weatherRecord['town']}}&nbsp;
+                                </span>
+                                <span class="grau-font">
+                                 {{ $weatherRecord['weather']}}&deg;
+                                 </span>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="grid-4 m-2">
@@ -77,10 +90,10 @@
                     </div>
                 </div>
                 <div class="grid-5">
-                    <div class="tabs-background-color p-3 m-2 rounded">
+                    <div class="tabs-background-color p-2 m-2 rounded">
                         <p class="text-white">"Developer Quotes"</p>
                     </div>
-                    <div class="tabs-background-color p-3 m-2 rounded">
+                    <div class="tabs-background-color p-2 m-2 rounded">
                         <p class="text-white">"German Quotes"</p>
                     </div>
                     <div class="tabs-background-color p-3 m-2 rounded">

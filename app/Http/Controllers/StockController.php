@@ -48,19 +48,20 @@ class StockController extends Controller
         if ($callCount < 2) {
             $allWeatherRecords = $this->getWeather();
             $stocks = $this->getStocks();
+            $todos = $this->getAllTodoTasks();
             $data = ['date' => $currentDate, 'count' => $callCount + 1];
             file_put_contents($filename, json_encode($data));
         } else {
             $allWeatherRecords = $this->showAllWeatherValues();
             $stocks = $this->selectSavedStock();
+            $todos = $this->getAllTodoTasks();
             //echo "Method already called twice today.";
         }
-        $allTodoTasks = $this->getAllTodoTasks();
         //dd($allTodoTasks);
 
 
         return view('dashboard', ['weatherRecords' => $allWeatherRecords, 'date' => $date, 'time' => $time
-            , 'stocks' => $stocks, 'allTodoTasks'=> $allTodoTasks
+            , 'stocks' => $stocks, 'allTodoTasks' => $todos
         ]);
     }
 
@@ -120,45 +121,45 @@ class StockController extends Controller
 
     private function getWeather()
     {
-        $apiKey = "37665afbf0f3683dfbd56bf04678a0f1";
+        $apiKey = "566362106b93ae738477ddbb292d1712";
         $client = new Client();
-        $belgradeId = '792680';
-        $havanaId = '3553496';
-        $nurnbergId = '2867714';
-        $town = 'Belgrade';
+        $cities = [
+            'Nuremberg' => '2867714',
+            'Belgrade' => '792680',
+            'Havana' => '3553478'
+        ];
         try {
-            $request = "https://api.openweathermap.org/data/2.5/forecast?id={$belgradeId}&appid={$apiKey}";
-            // Make a GET request
-            $response = $client->get($request);
-            // Get the response body as an array
-            $data = json_decode($response->getBody(), true);
+            foreach ($cities as $town => $cityId) {
+                $request = "https://api.openweathermap.org/data/2.5/forecast?id={$cityId}&appid={$apiKey}";
+                $response = $client->get($request);
+                $data = json_decode($response->getBody(), true);
 
-            // Convert temperature from Kelvin to Celsius if needed
-            $kelvinTemp = $data['list'][0]['main']['temp'];
-            $celsiusTemp = $kelvinTemp - 273.15;
-            $celsiusTemp = round($celsiusTemp, 0);
-            // Insert or update the weather data for the town
+                // Convert temperature from Kelvin to Celsius
+                $kelvinTemp = $data['list'][0]['main']['temp'];
+                $celsiusTemp = $kelvinTemp - 273.15;
+                $celsiusTemp = round($celsiusTemp, 0);
 
-            Weather::updateOrCreate(
-                ['town' => $town], // Search by town
-                ['weather' => $celsiusTemp] // Update the weather value (temperature)
-            );
-            return $allWeatherRecords = Weather::all();
-
+                // Insert or update the weather data for each town
+                Weather::updateOrCreate(
+                    ['town' => $town],
+                    ['weather' => $celsiusTemp]
+                );
+            }
         } catch (\Exception $e) {
             // Handle any errors that occur during the API request
             return view('dashboard', ['error' => $e->getMessage()]);
         }
+        return $allWeatherRecords = Weather::all()->toArray();
     }
 
     private function showAllWeatherValues()
     {
-        return $allWeatherRecords = Weather::all();
+        return $allWeatherRecords = Weather::all()->toArray();
     }
 
     private function getAllTodoTasks()
     {
-       return $todos = Todo::all()->toArray();
+        return $todos = Todo::all()->toArray();
     }
 
 }
