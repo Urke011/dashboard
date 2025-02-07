@@ -52,21 +52,21 @@
                     <div class="todo-card tabs-background-color  p-2 m-2 rounded">
                         @foreach($allTodoTasks as $allTodoTask)
                             <h5 class="text-white">{{$allTodoTask['title']}}</h5>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-column flex-md-row justify-content-md-between">
                                 <div>
                                     <h6 class="text-white">{{$allTodoTask['description']}} </h6>
                                 </div>
                                 <div class="text-white">
-                                    <span><x-tabler-pencil/></span><span><x-sui-trash/></span><span><x-bi-check-circle-fill/></span>
+                                    <span class="p-1"><x-tabler-pencil/></span><span class="p-1"><x-sui-trash/></span><span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
                 <div class="tabs-background-color m-3 grid-3 rounded">
-                    <div class="col text-white p-2 tabs-background-color text-center fit-content rounded">
-                        <p class="grau-font fs-4">{{$date}}</p>
-                        <p class="gold-font display-3">
+                    <div class="col text-white p-2 tabs-background-color text-center fit-content rounded" style="width: 100%; overflow-wrap: break-word;">
+                        <p class="grau-font fs-6">{{$date}}</p>
+                        <p class="gold-font">
                             <time-display></time-display>
                         </p>
                         <p>Daily Weather :</p>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="grid-4 m-2">
-                    <div class="tabs-background-color p-2 m-2 rounded" style="height: 100%;">
+                    <div class="tabs-background-color p-2 m-2 rounded" >
                         <p class="text-white text-center">Music</p>
                     </div>
                 </div>

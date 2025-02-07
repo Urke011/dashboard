@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="gold-font display-3">{{ currentTime }}</p>
+        <p class="gold-font fs-1">{{ currentTime }}</p>
     </div>
 </template>
 
