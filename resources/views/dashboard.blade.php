@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    @vite(['resources/sass/app.scss','resources/js/app.js'])
-</head>
+@include('head')
 <body>
 <div id="app">
+    <div>
+    @if(session('success'))
+        <p><success-alert message="{{ session('success') }}"></success-alert></p>
+    @endif
+    </div>
     <div class="dashboard-container">
         <div class="container">
             <div class="dashboard-background-color">
@@ -47,10 +41,11 @@
                 <div class="grid-2 m-2">
                     <div class="tabs-background-color p-2 m-2 rounded d-flex justify-content-between">
                         <h4 class="blue-font"><strong>Tudo</strong></h4>
-                        <span class="text-white blue-font"><x-ri-todo-line/></span>
+                        <a href="{{ route('todo.create') }}"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
                     </div>
+                    @foreach($allTodoTasks as $allTodoTask)
                     <div class="todo-card tabs-background-color  p-2 m-2 rounded">
-                        @foreach($allTodoTasks as $allTodoTask)
+
                             <h5 class="text-white">{{$allTodoTask['title']}}</h5>
                             <div class="d-flex flex-column flex-md-row justify-content-md-between">
                                 <div>
@@ -60,8 +55,9 @@
                                     <span class="p-1"><x-tabler-pencil/></span><span class="p-1"><x-sui-trash/></span><span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
-                        @endforeach
+
                     </div>
+                    @endforeach
                 </div>
                 <div class="tabs-background-color m-3 grid-3 rounded">
                     <div class="col text-white p-2 tabs-background-color text-center fit-content rounded" style="width: 100%; overflow-wrap: break-word;">
@@ -110,4 +106,4 @@
     </div>
 </div>
 </body>
-</html>
+@include('footer')

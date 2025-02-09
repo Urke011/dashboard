@@ -48,15 +48,17 @@ class StockController extends Controller
         if ($callCount < 2) {
             $allWeatherRecords = $this->getWeather();
             $stocks = $this->getStocks();
-            $todos = $this->getAllTodoTasks();
+            //$todos = $this->getAllTodoTasks();
             $data = ['date' => $currentDate, 'count' => $callCount + 1];
             file_put_contents($filename, json_encode($data));
         } else {
             $allWeatherRecords = $this->showAllWeatherValues();
             $stocks = $this->selectSavedStock();
-            $todos = $this->getAllTodoTasks();
+            //$todos = $this->getAllTodoTasks();
             //echo "Method already called twice today.";
         }
+        $todos = $this->getAllTodoTasks();
+
         //dd($allTodoTasks);
 
 
@@ -161,5 +163,24 @@ class StockController extends Controller
     {
         return $todos = Todo::all()->toArray();
     }
+    public function createTodoTaskInputs()
+    {
+        return view('todo.create');
+    }
+    public function storeTodoTaskInputs(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'is_complete' => 'nullable|boolean',
+        ]);
 
+        Todo::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'is_complete' => $validatedData['is_complete'] ?? false,  // Default to false if no value is provided
+        ]);
+
+        return redirect()->route('welcome')->with('success', 'Todo task created successfully!');
+    }
 }
