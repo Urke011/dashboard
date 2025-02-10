@@ -8,7 +8,7 @@
     </div>
     <div class="dashboard-container">
         <div class="container">
-            <h1 class="text-white">Deploy 1</h1>
+            <h1 class="text-white">Deploy 2</h1>
             <div class="dashboard-background-color">
                 <div class="grid-1 text-white p-2 rounded">
                     <div class="m-2 tabs-background-color rounded">
