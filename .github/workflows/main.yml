@@ -14,7 +14,6 @@ jobs:
           server: ftp.urosdeveloper.com
           username: urosdeve@dashboard.urosdeveloper.com
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /
+          server-dir: /dashboard.urosdeveloper.com/
           exclude: |
             .env
-          force: true
