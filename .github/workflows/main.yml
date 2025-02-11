@@ -16,6 +16,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          server-dir: home/urosdeve/dashboard.urosdeveloper.com/
+          server-dir: /home/urosdeve/dashboard.urosdeveloper.com/
           exclude: |
             .env
