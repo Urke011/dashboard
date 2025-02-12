@@ -29,6 +29,10 @@ jobs:
       - name: 🎨 Build frontend assets
         run: npm run build
 
+      - name: 🔑 Create .env file on server
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
       - name: 📂 Sync files with cleanup
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -43,3 +47,4 @@ jobs:
             storage/
             .git/
             .github/
+          sync-strategy: times
