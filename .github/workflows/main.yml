@@ -7,12 +7,6 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
-
-      - name: 🔨 Build Project
-        run: |
-          npm install
-          npm run build
-
       - name: 📂 Sync files with cleanup
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -22,4 +16,4 @@ jobs:
           server-dir: /
           exclude: |
             .env
-          dangerous-clean-slate: true
+         
