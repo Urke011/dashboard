@@ -7,10 +7,6 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
-      - name: Use Latest Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'latest'
 
       - name: 🔨 Build Project
         run: |
