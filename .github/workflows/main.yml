@@ -7,6 +7,28 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
+
+      - name: ⚡ Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: 📦 Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: 🏗️ Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install Node.js dependencies
+        run: npm install
+
+      - name: 🎨 Build frontend assets
+        run: npm run build
+
       - name: 📂 Sync files with cleanup
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -16,4 +38,8 @@ jobs:
           server-dir: /
           exclude: |
             .env
-         
+            node_modules/
+            vendor/
+            storage/
+            .git/
+            .github/
