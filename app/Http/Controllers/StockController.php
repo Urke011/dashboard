@@ -183,4 +183,26 @@ class StockController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Todo task created successfully!');
     }
+    public function editTodoTask($id)
+    {
+        $todo = Todo::findOrFail($id);
+        return view('todo.edit', compact('todo'));
+    }
+    public function updateTodoTask(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'is_complete' => 'nullable|boolean',
+        ]);
+
+        $todo = Todo::findOrFail($id);
+        $todo->update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'is_complete' => $validatedData['is_complete'] ?? false,
+        ]);
+
+        return redirect()->route('welcome')->with('success', 'Todo task updated successfully!');
+    }
 }

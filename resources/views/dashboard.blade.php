@@ -52,7 +52,7 @@
                                     <h6 class="text-white">{{$allTodoTask['description']}} </h6>
                                 </div>
                                 <div class="text-white">
-                                    <span class="p-1"><x-tabler-pencil/></span><span class="p-1"><x-sui-trash/></span><span class="p-1"><x-bi-check-circle-fill/></span>
+                                    <a href="{{ route('todo.edit', $allTodoTask['id']) }}"><span class="p-1"><x-tabler-pencil/></span></a><span class="p-1"><x-sui-trash/></span><span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
 

@@ -1,4 +1,7 @@
 @include('head')
+<div class="dashboard-link text-end text-white  m-3">
+    <a href="{{ route('welcome') }}" class="text-decoration-none gold-font">Dashboard</a>
+</div>
 <form action="{{ route('todo.create') }}" method="POST">
     @csrf
     <div class="container mt-5">
