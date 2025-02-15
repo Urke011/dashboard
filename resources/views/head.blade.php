@@ -14,7 +14,7 @@
     @else
         <!-- Production assets -->
         <link href="{{ asset('build/assets/app-C5PQxqkl.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/assets/app-tBZnU75t.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/assets/app-CQmzQVPJ.css') }}" rel="stylesheet">
         <script src="{{ asset('build/assets/app-XD3OQ2eG.js') }}" type="module"></script>
     @endif
 </head>
