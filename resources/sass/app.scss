@@ -1,6 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
 body{
-    background-color: #000000;
+    background-color: red;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -50,9 +50,7 @@ svg{
     flex-basis: 100%; /* Forces this card to take the full width and go to the next row */
     justify-content: center;
 }
-.testClass{
-    
-}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
