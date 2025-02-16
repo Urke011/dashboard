@@ -41,7 +41,7 @@
                 <div class="grid-2 m-2">
                     <div class="tabs-background-color p-2 m-2 rounded d-flex justify-content-between">
                         <h4 class="blue-font"><strong>Tudo</strong></h4>
-                        <a href="{{ route('todo.create') }}"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
+                        <a href="{{ route('todo.create') }}" title="Create new Task"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
                     </div>
                     @foreach($allTodoTasks as $allTodoTask)
                     <div class="todo-card tabs-background-color  p-2 m-2 rounded">
@@ -52,10 +52,9 @@
                                     <h6 class="text-white">{{$allTodoTask['description']}} </h6>
                                 </div>
                                 <div class="text-white">
-                                    <a href="{{ route('todo.edit', $allTodoTask['id']) }}"><span class="p-1"><x-tabler-pencil/></span></a><span class="p-1"><x-sui-trash/></span><span class="p-1"><x-bi-check-circle-fill/></span>
+                                    <a href="{{ route('todo.edit', $allTodoTask['id']) }}"><span class="p-1"><x-tabler-pencil/></span></a><span class="p-1"><span class="remove-task"><x-sui-trash/></span></span><span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
-
                     </div>
                     @endforeach
                 </div>

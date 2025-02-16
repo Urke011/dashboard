@@ -205,4 +205,6 @@ class StockController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Todo task updated successfully!');
     }
+
+
 }
