@@ -10,3 +10,4 @@ Route::post('/todo', [StockController::class, 'storeTodoTaskInputs'])->name('tod
 Route::get('/todo/{id}/edit', [StockController::class, 'editTodoTask'])->name('todo.edit');
 Route::put('/todo/{id}', [StockController::class, 'updateTodoTask'])->name('todo.update');
 Route::delete('/todo/{id}', [StockController::class, 'deleteTodoTask'])->name('todo.delete');
+

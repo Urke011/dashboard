@@ -205,6 +205,16 @@ class StockController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Todo task updated successfully!');
     }
+    public function deleteTodoTask($id)
+    {
+        $task = Todo::findOrFail($id);
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+        $task->delete();
 
+        return response()->json(['message' => 'Task deleted successfully'], 200);
+        //return response()->json(null, 204);
+    }
 
 }

@@ -32,8 +32,12 @@ body{
     height: fit-content;
 }
 
-svg{
+svg, img{
     width: 1.5rem;
+}
+
+.white-img-color{
+    filter: invert(89%) sepia(89%) saturate(0%) hue-rotate(163deg) brightness(111%) contrast(113%);
 }
 .text-start {
     display: flex;

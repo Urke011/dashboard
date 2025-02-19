@@ -2,10 +2,13 @@
 <body>
 <div id="app">
     <div>
-    @if(session('success'))
-        <p><success-alert message="{{ session('success') }}"></success-alert></p>
-    @endif
+        @if(session('success'))
+            <p>
+                <success-alert message="{{ session('success') }}"></success-alert>
+            </p>
+        @endif
     </div>
+
     <div class="dashboard-container">
         <div class="container">
             <div class="dashboard-background-color">
@@ -44,22 +47,26 @@
                         <a href="{{ route('todo.create') }}" title="Create new Task"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
                     </div>
                     @foreach($allTodoTasks as $allTodoTask)
-                    <div class="todo-card tabs-background-color  p-2 m-2 rounded">
-
+                        <div class="todo-card tabs-background-color p-2 m-2 rounded">
                             <h5 class="text-white">{{$allTodoTask['title']}}</h5>
                             <div class="d-flex flex-column flex-md-row justify-content-md-between">
                                 <div>
                                     <h6 class="text-white">{{$allTodoTask['description']}} </h6>
                                 </div>
                                 <div class="text-white">
-                                    <a href="{{ route('todo.edit', $allTodoTask['id']) }}"><span class="p-1"><x-tabler-pencil/></span></a><span class="p-1"><span class="remove-task"><x-sui-trash/></span></span><span class="p-1"><x-bi-check-circle-fill/></span>
+                                    <a href="{{ route('todo.edit', $allTodoTask['id']) }}">
+                                        <span class="p-1  white-img-color"><x-tabler-pencil/></span>
+                                    </a>
+                                    <span class="p-1 text"><delete-task :task-id="{{json_encode($allTodoTask['id'])}}"></delete-task></span>
+                                    <span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                     @endforeach
                 </div>
                 <div class="tabs-background-color m-3 grid-3 rounded">
-                    <div class="col text-white p-2 tabs-background-color text-center fit-content rounded" style="width: 100%; overflow-wrap: break-word;">
+                    <div class="col text-white p-2 tabs-background-color text-center fit-content rounded"
+                         style="width: 100%; overflow-wrap: break-word;">
                         <p class="grau-font fs-6">{{$date}}</p>
                         <p class="gold-font">
                             <time-display></time-display>
@@ -71,7 +78,7 @@
                                 <span class="grau-font">
                                      {{ $weatherRecord['town']}}&nbsp;
                                 </span>
-                                <span class="grau-font">
+                                    <span class="grau-font">
                                  {{ $weatherRecord['weather']}}&deg;
                                  </span>
                                 </div>
@@ -80,7 +87,7 @@
                     </div>
                 </div>
                 <div class="grid-4 m-2">
-                    <div class="tabs-background-color p-2 m-2 rounded" >
+                    <div class="tabs-background-color p-2 m-2 rounded">
                         <p class="text-white text-center">Music</p>
                     </div>
                 </div>
