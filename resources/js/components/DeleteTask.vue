@@ -1,6 +1,6 @@
 <template>
     <span @click="deleteTask()" class="btn-click">
-        <img src="/public/images/trash.png" alt="trash-icon">
+        <img src="./public/images/trash.png" alt="trash-icon">
     </span>
     <div style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;">
         <div v-if="visible" class="alert alert-success">
