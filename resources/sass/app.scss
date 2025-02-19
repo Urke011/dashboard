@@ -35,15 +35,17 @@ body{
 svg, img{
     width: 1.5rem;
 }
-.todo-tasks svg:hover,
-.todo-tasks img:hover{
+
+.todo-icon:hover{
     top: -1px;
 }
-.todo-tasks svg,
-.todo-tasks img{
+.todo-icon{
     position: relative;
     top: 0;
-    transition: top ease 0.5s;
+    transition: top ease 0.1ms;
+}
+.cheked-icon:hover{
+    cursor: pointer;
 }
 .white-img-color{
     filter: invert(89%) sepia(89%) saturate(0%) hue-rotate(163deg) brightness(111%) contrast(113%);
