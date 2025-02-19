@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div v-if="visible" class="alert alert-success">
+    <div v-if="visible" class="alert alert-success" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center;">
         <p>{{ successMessage }}</p>
     </div>
 </template>
@@ -85,7 +85,7 @@ export default {
 .modal-content {
     background: #151c1d;
     padding: 20px;
-    border: 2px solid #e2b52d;
+    border: 3px solid #dc3545;
     border-radius: 8px;
     text-align: center;
     max-width: 400px;
@@ -113,7 +113,7 @@ export default {
 }
 
 .btn-confirm {
-    background: #e2b52d;
+    background: #dc3545;
     color: white;
 }
 
