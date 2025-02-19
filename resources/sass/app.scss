@@ -35,7 +35,16 @@ body{
 svg, img{
     width: 1.5rem;
 }
-
+.todo-tasks svg:hover,
+.todo-tasks img:hover{
+    top: -1px;
+}
+.todo-tasks svg,
+.todo-tasks img{
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
 .white-img-color{
     filter: invert(89%) sepia(89%) saturate(0%) hue-rotate(163deg) brightness(111%) contrast(113%);
 }

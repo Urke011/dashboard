@@ -21,7 +21,7 @@ export default {
         }
     },computed: {
         trashIcon() {
-            return `${window.location.origin}/public/images/trash.png`;
+            return `${window.location.origin}/images/trash.png`;
         }
     },
     setup(props) {

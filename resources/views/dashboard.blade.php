@@ -53,11 +53,12 @@
                                 <div>
                                     <h6 class="text-white">{{$allTodoTask['description']}} </h6>
                                 </div>
-                                <div class="text-white">
+                                <div class="text-white todo-tasks">
                                     <a href="{{ route('todo.edit', $allTodoTask['id']) }}">
                                         <span class="p-1  white-img-color"><x-tabler-pencil/></span>
                                     </a>
-                                    <span class="p-1 text"><delete-task :task-id="{{json_encode($allTodoTask['id'])}}"></delete-task></span>
+                                    <span class="p-1 text"><delete-task
+                                            :task-id="{{json_encode($allTodoTask['id'])}}"></delete-task></span>
                                     <span class="p-1"><x-bi-check-circle-fill/></span>
                                 </div>
                             </div>
