@@ -11,61 +11,47 @@ use Illuminate\Support\Facades\Cache;
 
 class StockController extends Controller
 {
+
     public function getAllDashboardValue()
     {
 
-        //current date and time
+        $maxCalls = 2;
         $currentDateTime = $this->currentTime();
-        //format date
         $currentDateTime = str_replace('-', '/', $currentDateTime);
-        // Explode the string into date and time
         list($date, $time) = explode(" ", $currentDateTime);
 
-        // call api only 2 times per day
-        $directory = storage_path('app/logs');
-        $filename = $directory . "/call_log.json";
+        $date = substr($date, 0, 10);
 
-        // Ensure the directory exists
-        if (!file_exists($directory)) {
-            mkdir($directory, 0755, true);
-        }
+        $cacheKey = "dashboard_calls_{$date}";
 
-        if (file_exists($filename)) {
-            $data = json_decode(file_get_contents($filename), true);
-            $lastCallDate = $data['date'] ?? '';
-            $callCount = $data['count'] ?? 0;
-        } else {
-            $lastCallDate = '';
-            $callCount = 0;
-        }
+        $callCount = Cache::get($cacheKey, 0);
+        //dd($callCount);
+        $limitReached = $callCount >= $maxCalls;
 
-        $currentDate = date('Y-m-d');
 
-        if ($lastCallDate !== $currentDate) {
-            $callCount = 0; // Reset count for a new day
-        }
-
-        if ($callCount < 2) {
+        if ($callCount < $maxCalls) {
             $allWeatherRecords = $this->getWeather();
             $stocks = $this->getStocks();
-            //$todos = $this->getAllTodoTasks();
-            $data = ['date' => $currentDate, 'count' => $callCount + 1];
-            file_put_contents($filename, json_encode($data));
+            Cache::put($cacheKey, $callCount + 1, now()->endOfDay());
         } else {
             $allWeatherRecords = $this->showAllWeatherValues();
             $stocks = $this->selectSavedStock();
-            //$todos = $this->getAllTodoTasks();
-            //echo "Method already called twice today.";
         }
+
         $todos = $this->getAllTodoTasks();
 
-        //dd($allTodoTasks);
-
-
-        return view('dashboard', ['weatherRecords' => $allWeatherRecords, 'date' => $date, 'time' => $time
-            , 'stocks' => $stocks, 'allTodoTasks' => $todos
+        return view('dashboard', [
+            'weatherRecords' => $allWeatherRecords,
+            'date' => $date,
+            'time' => $time,
+            'stocks' => $stocks,
+            'allTodoTasks' => $todos,
+            'callCount' => $callCount,
+            'limitReached' => $limitReached,
+            'maxCalls' => $maxCalls,
         ]);
     }
+
 
     private function getStocks()
     {
@@ -163,10 +149,12 @@ class StockController extends Controller
     {
         return $todos = Todo::all()->toArray();
     }
+
     public function createTodoTaskInputs()
     {
         return view('todo.create');
     }
+
     public function storeTodoTaskInputs(Request $request)
     {
         $validatedData = $request->validate([
@@ -183,11 +171,13 @@ class StockController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Todo task created successfully!');
     }
+
     public function editTodoTask($id)
     {
         $todo = Todo::findOrFail($id);
         return view('todo.edit', compact('todo'));
     }
+
     public function updateTodoTask(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -205,6 +195,7 @@ class StockController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Todo task updated successfully!');
     }
+
     public function deleteTodoTask($id)
     {
         $task = Todo::findOrFail($id);

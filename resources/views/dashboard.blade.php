@@ -8,7 +8,9 @@
             </p>
         @endif
     </div>
-
+    @if(session('error'))
+        <div style="color: red;">{{ session('error') }}</div>
+    @endif
     <div class="dashboard-container">
         <div class="container">
             <div class="dashboard-background-color">
@@ -115,6 +117,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="hover-container m-1">
+        <div class="text-end">
+            <form action="{{ route('reset.cache') }}" method="POST">
+                @csrf
+                <button type="submit">Reset</button>
+            </form>
+            <p class="text-white" style="font-size: x-small;">Number of calls today:
+                <strong>{{ $callCount }}</strong><br><span>Left calls: {{ $maxCalls - $callCount }}</span></p>
         </div>
     </div>
 </div>

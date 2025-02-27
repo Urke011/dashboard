@@ -2,7 +2,7 @@
 <div class="dashboard-link text-end text-white  m-3">
     <a href="{{ route('welcome') }}" class="text-decoration-none gold-font">Dashboard</a>
 </div>
-<form action="{{ route('todo.create') }}" method="POST">
+<form action="{{ route('todo.store') }}" method="POST">
     @csrf
     <div class="container mt-5">
         <div class="row">

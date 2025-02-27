@@ -65,7 +65,19 @@ svg, img{
     flex-basis: 100%; /* Forces this card to take the full width and go to the next row */
     justify-content: center;
 }
+.hover-container{
+    float: right;
+}
+.hover-container .text-end {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 
+.hover-container:hover .text-end {
+    opacity: 1;
+    visibility: visible;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
