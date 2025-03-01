@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+    web:
+        image: app-name:latest
+        build:
+            target: web
+            context: .
+        env_file:
+            - .env
+        ports:
+            - "8000:80"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - db
+        networks:
+            - app-network
+
+    db:
+        platform: "linux/amd64"
+        image: mysql:5.7
+        env_file:
+            - .env
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: uros
+            MYSQL_PASSWORD: password
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # This allows MySQL to run without a root password
+        ports:
+            - "3307:3306"  # Changing the host port to 3307
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - app-network
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "8081:80"
+        environment:
+            PMA_HOST: db
+            PMA_USER: uros
+            PMA_PASSWORD:  password
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    dbdata:

@@ -42,7 +42,6 @@
                         @endif
                     </div>
                 </div>
-
                 <div class="grid-2 m-2">
                     <div class="tabs-background-color p-2 m-2 rounded d-flex justify-content-between">
                         <h4 class="blue-font"><strong>Tudo</strong></h4>
@@ -97,7 +96,7 @@
                 </div>
                 <div class="grid-4 m-2">
                     <div class="tabs-background-color p-2 m-2 rounded">
-                        <p class="text-white text-center">Music</p>
+                        <mp3-player></mp3-player>
                     </div>
                 </div>
                 <div class="grid-5">

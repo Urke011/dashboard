@@ -15,6 +15,14 @@ body{
 .tabs-background-color{
     background-color: #1e2228;
 }
+.grid-4 .tabs-background-color{
+    height: 95%;
+    background-image: url("/public/images/mp3Background/posters-brazil-background-seamless-pattern.jpg.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    align-content: end;
+}
 
 .gold-font{
     color: #e2b52d !important;
@@ -88,6 +96,9 @@ svg, img{
     .dashboard-background-color{
         height: 100%;
     }
+    .grid-4 .tabs-background-color{
+        min-height: 250px;
+    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -98,6 +109,9 @@ svg, img{
     }
     .dashboard-background-color{
         height: 100%;
+    }
+    .grid-4 .tabs-background-color{
+        min-height: 250px;
     }
 }
 
