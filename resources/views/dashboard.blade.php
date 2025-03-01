@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="grid-4 m-2">
-                    <div class="tabs-background-color p-2 m-2 rounded">
+                    <div class="tabs-background-color p-2 m-2 rounded"  style=" background-image: url('{{asset('images/mp3Background/posters-brazil-background-seamless-pattern.jpg.jpg')}}');">
                         <mp3-player></mp3-player>
                     </div>
                 </div>

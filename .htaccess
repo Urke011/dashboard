@@ -1,10 +1,5 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-
-    # Ensure that requests for assets like images, CSS, and JS are not rewritten to public/
-    RewriteRule ^(public/)?(images|css|js)/(.*)$ $0 [L]
-
-    # Rewrite all other requests to the public directory
+    RewriteEngine on
     RewriteRule ^$ public/ [L]
-    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteRule (.*) public/$1 [L]
 </IfModule>
