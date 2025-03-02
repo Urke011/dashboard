@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'api_stock_service'=>[
+        'key' => env('STOCK_API_KEY')
+    ],
+    'api_weather_service'=>[
+        'key' => env('WEATHER_API_KEY')
+    ],
 ];

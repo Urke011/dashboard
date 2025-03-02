@@ -56,7 +56,7 @@ class StockController extends Controller
     private function getStocks()
     {
         //max 25 calls
-        $apiKey = "OWACIBRHVEIVW5RO";
+        $apiKey = config('services.api_stock_service.key');
         $symbols = ["MSFT", "MCD","KO"];
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
 
@@ -120,7 +120,7 @@ class StockController extends Controller
 
     private function getWeather()
     {
-        $apiKey = "566362106b93ae738477ddbb292d1712";
+        $apiKey = config('services.api_weather_service.key');
         $client = new Client();
         $cities = [
             'Nuremberg' => '2867714',
