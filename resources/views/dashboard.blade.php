@@ -45,6 +45,7 @@
                         <h4 class="blue-font"><strong>Tudo</strong></h4>
                         <a href="{{ route('todo.create') }}" title="Create new Task"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
                     </div>
+                    @if(!empty($allTodoTasks))
                     @foreach($allTodoTasks as $allTodoTask)
                         <div class="todo-card tabs-background-color p-2 m-2 rounded">
                             <h5 class="grau-font">{{$allTodoTask['title']}}</h5>
@@ -69,6 +70,7 @@
                             </div>
                         </div>
                     @endforeach
+                    @endif
                 </div>
                 <div class="tabs-background-color m-3 grid-3 rounded">
                     <div class="col text-white p-2 tabs-background-color text-center fit-content rounded"
