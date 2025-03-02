@@ -55,44 +55,55 @@ class StockController extends Controller
 
     private function getStocks()
     {
-        $apiKey = "OWACIBRHVEIVW5RO"; // Your Alpha Vantage API Key
-        $symbol = "MSFT";
+        //max 25 calls
+        $apiKey = "OWACIBRHVEIVW5RO";
+        $symbols = ["MSFT", "MCD","KO"];
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
-        //max-request = 25 requests per day(modify)
+
         try {
-            $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
-            // Make a GET request
-            $response = file_get_contents($apiUrl); // Send the request
-            $data = json_decode($response, true); // Decode the response to an associative array
-            $timeSeries = $data['Time Series (5min)'];
-            $firstKey = array_key_first($timeSeries); // Get the first datetime key
+            foreach ($symbols as $symbol) {
+                $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
+                // Make a GET request
+                $response = file_get_contents($apiUrl); // Send the request
+                $data = json_decode($response, true); // Decode the response to an associative array
+                if (!isset($data['Time Series (5min)'])) {
+                    // Skip if the response doesn't contain the necessary data
+                    continue;
+                }
 
-            $stockSymbol = $data['Meta Data']['2. Symbol'];
-            $LastRefreshed = $data['Meta Data']['3. Last Refreshed'];
-            $LastRefreshed = date('d/m/Y', strtotime($LastRefreshed));
-            $high = $timeSeries[$firstKey]['2. high'];
-            $high = round($high, 0);
-            $volume = $timeSeries[$firstKey]['5. volume'];
+                $timeSeries = $data['Time Series (5min)'];
+                $firstKey = array_key_first($timeSeries); // Get the first datetime key
 
-            //insert (sometimes work only this insert method)
-            $data = [
-                'stockSymbol' => $stockSymbol,
-                'LastRefreshed' => $LastRefreshed,
-                'high' => $high,
-                'volume' => $volume
-            ];
-            Stock::updateOrCreate(
-                ['stockSymbol' => $stockSymbol],
-                $data
-            );
+                $stockSymbol = $data['Meta Data']['2. Symbol'];
+                $LastRefreshed = $data['Meta Data']['3. Last Refreshed'];
+                $LastRefreshed = date('d/m/Y', strtotime($LastRefreshed));
+                $high = $timeSeries[$firstKey]['2. high'];
+                $high = round($high, 0);
+                $volume = $timeSeries[$firstKey]['5. volume'];
 
-            return $stock = Stock::all();
+                // Insert or update stock data
+                $data = [
+                    'stockSymbol' => $stockSymbol,
+                    'LastRefreshed' => $LastRefreshed,
+                    'high' => $high,
+                    'volume' => $volume
+                ];
+
+                Stock::updateOrCreate(
+                    ['stockSymbol' => $stockSymbol],
+                    $data
+                );
+            }
+
+            return $stocks = Stock::all();
 
         } catch (\Exception $e) {
             // Handle any errors that occur during the API request
             return view('dashboard', ['error' => $e->getMessage()]);
         }
     }
+
+
 
     private function selectSavedStock()
     {

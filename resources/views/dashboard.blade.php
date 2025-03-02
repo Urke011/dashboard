@@ -25,22 +25,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" m-2 p-2 tabs-background-color rounded">
-                        @if(isset($stocks[0]))
-                            <p><span class="blue-font">Symbol:</span> {{ $stocks[0]->stockSymbol }}</p>
-                            <p><span class="blue-font">Update:</span> {{ $stocks[0]->LastRefreshed }}</p>
-                            <p><span class="blue-font">Price:</span> {{ $stocks[0]->high }}$</p>
-                            <p><span class="blue-font">Volume:</span> {{ $stocks[0]->volume }}</p>
-                        @endif
-                    </div>
-                    <div class="m-2 p-2 tabs-background-color rounded">
-                        @if(isset($stocks[0]))
-                            <p><span class="blue-font">Symbol:</span> {{ $stocks[0]->stockSymbol }}</p>
-                            <p><span class="blue-font">Update:</span> {{ $stocks[0]->LastRefreshed }}</p>
-                            <p><span class="blue-font">Price:</span> {{ $stocks[0]->high }}$</p>
-                            <p><span class="blue-font">Volume:</span> {{ $stocks[0]->volume }}</p>
-                        @endif
-                    </div>
+                    @if (!empty($stocks))
+                        @foreach ($stocks as $stock)
+                            <div class="m-2 p-1 tabs-background-color rounded">
+                                <div class="p-1 border-b border-gray-300">
+                                    <p><span class="blue-font">Symbol:</span> {{ $stock->stockSymbol }}</p>
+                                    <p><span class="blue-font">Update:</span> {{ $stock->LastRefreshed }}</p>
+                                    <p><span class="blue-font">Price:</span> {{ $stock->high }}$</p>
+                                    <p><span class="blue-font">Volume:</span> {{ $stock->volume }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-500">No stock data available.</p>
+                    @endif
                 </div>
                 <div class="grid-2 m-2">
                     <div class="tabs-background-color p-2 m-2 rounded d-flex justify-content-between">
@@ -49,10 +47,10 @@
                     </div>
                     @foreach($allTodoTasks as $allTodoTask)
                         <div class="todo-card tabs-background-color p-2 m-2 rounded">
-                            <h5 class="text-white">{{$allTodoTask['title']}}</h5>
+                            <h5 class="grau-font">{{$allTodoTask['title']}}</h5>
                             <div class="d-flex flex-column flex-md-row justify-content-md-between">
                                 <div>
-                                    <h6 class="text-white">{{$allTodoTask['description']}} </h6>
+                                    <p class="grau-font" style="font-size: small;">{{$allTodoTask['description']}} </p>
                                 </div>
                                 <div class="d-flex text-white todo-tasks">
                                     <div>
@@ -95,25 +93,24 @@
                     </div>
                 </div>
                 <div class="grid-4 m-2">
-                    <div class="tabs-background-color p-2 m-2 rounded"  style=" background-image: url('{{asset('images/mp3Background/posters-brazil-background-seamless-pattern.jpg.jpg')}}');">
+                    <div class="tabs-background-color p-2 m-2 rounded"
+                         style=" background-image: url('{{asset('images/mp3Background/posters-brazil-background-seamless-pattern.jpg.jpg')}}');">
                         <mp3-player></mp3-player>
                     </div>
                 </div>
                 <div class="grid-5">
-                    <div class="tabs-background-color p-2 m-2 rounded">
-                        <p class="text-white">"Developer Quotes"</p>
-                    </div>
-                    <div class="tabs-background-color p-2 m-2 rounded">
-                        <p class="text-white">"German Quotes"</p>
+                    <div class="tabs-background-color p-3 m-2 rounded">
+                        <p class="text-white center">“It’s harder to read code than to write it”</p>
                     </div>
                     <div class="tabs-background-color p-3 m-2 rounded">
-                        <p class="text-white">"Neki citat"</p>
+                        <p class="text-white center">“Nothing is as permanent as a temporary solution that works”</p>
+                    </div>
+                    <div class="tabs-background-color p-3 m-2 rounded">
+                        <p class="text-white center">“The best code is no code at all. Because then there are no bugs.”</p>
                     </div>
                 </div>
                 <div class="grid-6">
-                    <div class="tabs-background-color p-2 m-2 rounded">
-                        <p class="text-white">something for future ideas</p>
-                    </div>
+
                 </div>
             </div>
         </div>

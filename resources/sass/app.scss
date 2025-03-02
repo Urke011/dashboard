@@ -3,7 +3,6 @@ body{
     background-color: #000000;
     font-family: 'Roboto', sans-serif;
 }
-
 .dashboard-background-color{
     display: grid;
     grid-template-columns: repeat(9, 1fr);
@@ -15,8 +14,18 @@ body{
 .tabs-background-color{
     background-color: #1e2228;
 }
+.center {
+    display: flex;
+    margin: 0.5rem;
+    align-items: center;
+}
+.grid-1 p{
+    margin: 0.5rem;
+}
+.grid-3{
+    height: fit-content;
+}
 .grid-4 .tabs-background-color{
-    height: 95%;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -131,12 +140,10 @@ svg, img{
         grid-row: 1;
     }
     .grid-5{
-        background-color: blueviolet;
         grid-column: 1 / 10;
         grid-row: 5;
     }
     .grid-6{
-        background-color: blue;
         grid-column: 1 / 10;
         grid-row: 6;
     }
@@ -172,12 +179,10 @@ svg, img{
         grid-row: 1/3;
     }
     .grid-5{
-        background-color: blueviolet;
         grid-column: 7 / 10;
         grid-row: 3;
     }
     .grid-6{
-        background-color: blue;
         grid-column: 7 / 10;
         grid-row: 4;
     }
