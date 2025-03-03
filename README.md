@@ -93,9 +93,3 @@ You can run this project **with or without Docker**.
 - Allows users to play/pause music.
 - Supports track browsing.
 
-## Caching
-
-The app caches API data to prevent excessive requests. You can manually clear the cache using:
-
-```bash
-php artisan cache:clear
