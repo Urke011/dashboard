@@ -31,7 +31,7 @@ You can run this project **with or without Docker**.
 1. **Clone the repository**  
 
     ```bash
-    git clone https://github.com/yourusername/laravel-dashboard.git
+    git clone https://github.com/Urke011/dashboard.git
     cd laravel-dashboard
     ```
 
