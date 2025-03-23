@@ -57,7 +57,7 @@ class StockController extends Controller
     {
         //max 25 calls
         $apiKey = config('services.api_stock_service.key');
-        $symbols = ["MSFT", "MCD","KO",'AAPL'];
+        $symbols = ["MSFT", "AAPL", "GM", "MCD"];
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
 
         try {
