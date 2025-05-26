@@ -94,7 +94,26 @@ svg, img{
     opacity: 1;
     visibility: visible;
 }
+.stock-scroll-bar {
+  height: 480px;
+  overflow-y: auto;
 
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1e2228;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #555 #1e2228;
+}
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {

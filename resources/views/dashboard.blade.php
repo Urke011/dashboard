@@ -26,6 +26,7 @@
                         </div>
                     </div>
                     @if (!empty($stocks))
+                    <div class="stock-scroll-bar" style="">
                         @foreach ($stocks as $stock)
                             <div class="m-2 p-1 tabs-background-color rounded">
                                 <div class="p-1 border-b border-gray-300">
@@ -35,7 +36,8 @@
                                     <p><span class="blue-font">Volume:</span> {{ $stock->volume }}</p>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach     
+                    </div>
                     @else
                         <p class="text-gray-500">No stock data available.</p>
                     @endif
