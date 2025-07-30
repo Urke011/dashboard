@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\OcrController;
 use App\Http\Controllers\CacheController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
@@ -12,4 +12,6 @@ Route::post('/todo', [StockController::class, 'storeTodoTaskInputs'])->name('tod
 Route::get('/todo/{id}/edit', [StockController::class, 'editTodoTask'])->name('todo.edit');
 Route::put('/todo/{id}', [StockController::class, 'updateTodoTask'])->name('todo.update');
 Route::delete('/todo/{id}', [StockController::class, 'deleteTodoTask'])->name('todo.delete');
+Route::get('/ocr-upload', [OcrController::class, 'showForm'])->name('ocr.form');
+Route::post('/ocr-upload', [OcrController::class, 'processImage'])->name('ocr.process');
 

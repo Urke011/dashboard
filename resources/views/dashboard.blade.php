@@ -12,6 +12,11 @@
         <div style="color: red;">{{ session('error') }}</div>
     @endif
     <div class="dashboard-container">
+        <div class="p-3" style="background-color: #0a58ca; width: fit-content; position: fixed; right: 0; top: 0;">
+            <a class="text-white" href="{{ route('ocr.form') }}">
+                <h3>Add receipt(test)</h3>
+            </a>
+        </div>
         <div class="container">
             <div class="dashboard-background-color">
                 <div class="grid-1 text-white p-2 rounded">
@@ -36,7 +41,7 @@
                                     <p><span class="blue-font">Volume:</span> {{ $stock->volume }}</p>
                                 </div>
                             </div>
-                        @endforeach     
+                        @endforeach
                     </div>
                     @else
                         <p class="text-gray-500">No stock data available.</p>

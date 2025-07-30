@@ -1,10 +1,15 @@
 # Use PHP with Apache as the base image
 FROM php:8.2-apache as web
 
-# Install Additional System Dependencies
+# Install system dependencies including tesseract and srp, rus jezike
 RUN apt-get update && apt-get install -y \
     libzip-dev \
-    zip
+    zip \
+    tesseract-ocr \
+    tesseract-ocr-rus \
+    tesseract-ocr-srp \
+    libtesseract-dev \
+    libleptonica-dev
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -16,7 +21,6 @@ RUN a2enmod rewrite
 RUN docker-php-ext-install pdo_mysql zip
 
 # Configure Apache DocumentRoot to point to Laravel's public directory
-# and update Apache configuration files
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
@@ -24,7 +28,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # Copy the application code
 COPY . /var/www/html
 
-# Set the working directory
+# Set working directory
 WORKDIR /var/www/html
 
 # Install composer
@@ -35,3 +39,6 @@ RUN composer install
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Set environment variable for tessdata path
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
