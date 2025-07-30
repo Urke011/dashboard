@@ -42,3 +42,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Set environment variable for tessdata path
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
+
+#test
+
+
