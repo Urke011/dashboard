@@ -9,7 +9,19 @@
         opacity: 1;
     }
 }
-
+@keyframes slideInLeftFade {
+    0% {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.slideInLeftFade {
+    animation: slideInLeftFade 0.9s ease-out forwards;
+}
 .slideDownFadeIn{
     animation: slideDownFadeIn 0.9s ease-out forwards;
 }

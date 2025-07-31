@@ -1,6 +1,6 @@
 @include('head')
 <body>
-<div id="app">
+
     <div>
         @if(session('success'))
             <p>
@@ -137,6 +137,5 @@
                 <strong>{{ $callCount }}</strong><br><span>Left calls: {{ $maxCalls - $callCount }}</span></p>
         </div>
     </div>
-</div>
 </body>
 @include('footer')

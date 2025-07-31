@@ -20,3 +20,4 @@
         @vite(['resources/js/app.js', 'resources/sass/app.scss'])
     @endif
 </head>
+<div id="app">

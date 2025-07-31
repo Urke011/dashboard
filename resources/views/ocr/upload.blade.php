@@ -2,19 +2,36 @@
 <div class="dashboard-link text-end text-white  m-3">
     <a href="{{ route('welcome') }}" class="text-decoration-none gold-font">Dashboard</a>
 </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div style="background-color: #000;">
     <div class="container mt-5  p-4 rounded shadow-sm slideDownFadeIn" style="background-color: #151c1d;">
-        <h1 class="mb-4 text-center fw-bold gold-font">Upload Image for OCR</h1>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <h1 class="mb-4 text-center fw-bold gold-font">Add receipt price</h1>
+        <div style="margin: 0 auto; width: 70%;">
+            <form method="POST" action="{{ route('receipt.step1') }}" class="mb-5">
+                @csrf
+                <div class="mb-3">
+                    <label for="image" class="form-label fw-semibold blue-font">Text Receipt price</label>
+                    <input type="number" name="amount" class="form-control form-control-lg" id="image" required>
+                    <br>
+                    <select class="form-select" name="currency" aria-label="Default select example" required>
+                        <option value="" selected disabled>Select Currency</option>
+                        <option value="1">EUR</option>
+                        <option value="2">USD</option>
+                        <option value="3">RSD</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-lg w-100 text-white" style="background-color: #42869e;">Add receipt</button>
+            </form>
+        </div>
+        <h1 class="mb-4 text-center fw-bold gold-font">Or upload receipt image for OCR</h1>
         <div style="">
             <form method="POST" action="{{ route('ocr.process') }}" enctype="multipart/form-data" class="mb-5">
                 @csrf
