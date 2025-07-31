@@ -1,8 +1,23 @@
 @import 'bootstrap/scss/bootstrap';
+@keyframes slideDownFadeIn {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slideDownFadeIn{
+    animation: slideDownFadeIn 0.8s ease-out forwards;
+}
 body{
     background-color: #000000;
     font-family: 'Roboto', sans-serif;
 }
+
 .dashboard-background-color{
     display: grid;
     grid-template-columns: repeat(9, 1fr);

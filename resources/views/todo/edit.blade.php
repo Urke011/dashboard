@@ -2,7 +2,7 @@
     <div class="dashboard-link text-end text-white  m-3">
         <a href="{{ route('welcome') }}" class="text-decoration-none gold-font">Dashboard</a>
     </div>
-<div class="container mt-5 rounded">
+<div class="container mt-5 rounded slideDownFadeIn">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card p-3">

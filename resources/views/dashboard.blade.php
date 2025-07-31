@@ -11,14 +11,15 @@
     @if(session('error'))
         <div style="color: red;">{{ session('error') }}</div>
     @endif
-    <div class="dashboard-container">
-        <div class="p-3" style="background-color: #0a58ca; width: fit-content; position: fixed; right: 0; top: 0;">
-            <a class="text-white" href="{{ route('ocr.form') }}">
+    <div class="">
+        <a class="text-white" style="text-decoration: none !important;" href="{{ route('ocr.form') }}">
+            <div class="p-3"
+                 style="background-color: #42869e; width: fit-content; position: fixed; right: 0; top: 0; border: 1px solid #fff; z-index: 1;">
                 <h3>Add receipt(test)</h3>
-            </a>
-        </div>
+            </div>
+        </a>
         <div class="container">
-            <div class="dashboard-background-color">
+            <div class="dashboard-background-color slideDownFadeIn">
                 <div class="grid-1 text-white p-2 rounded">
                     <div class="m-2 tabs-background-color rounded">
                         <div class="text-end d-flex justify-content-between align-items-center p-2 m-2 rounded">
@@ -31,18 +32,18 @@
                         </div>
                     </div>
                     @if (!empty($stocks))
-                    <div class="stock-scroll-bar" style="">
-                        @foreach ($stocks as $stock)
-                            <div class="m-2 p-1 tabs-background-color rounded">
-                                <div class="p-1 border-b border-gray-300">
-                                    <p><span class="blue-font">Symbol:</span> {{ $stock->stockSymbol }}</p>
-                                    <p><span class="blue-font">Update:</span> {{ $stock->LastRefreshed }}</p>
-                                    <p><span class="blue-font">Price:</span> {{ $stock->high }}$</p>
-                                    <p><span class="blue-font">Volume:</span> {{ $stock->volume }}</p>
+                        <div class="stock-scroll-bar" style="">
+                            @foreach ($stocks as $stock)
+                                <div class="m-2 p-1 tabs-background-color rounded">
+                                    <div class="p-1 border-b border-gray-300">
+                                        <p><span class="blue-font">Symbol:</span> {{ $stock->stockSymbol }}</p>
+                                        <p><span class="blue-font">Update:</span> {{ $stock->LastRefreshed }}</p>
+                                        <p><span class="blue-font">Price:</span> {{ $stock->high }}$</p>
+                                        <p><span class="blue-font">Volume:</span> {{ $stock->volume }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
                     @else
                         <p class="text-gray-500">No stock data available.</p>
                     @endif
@@ -53,30 +54,31 @@
                         <a href="{{ route('todo.create') }}" title="Create new Task"><span class="text-white blue-font"><x-ri-todo-line/></span></a>
                     </div>
                     @if(!empty($allTodoTasks))
-                    @foreach($allTodoTasks as $allTodoTask)
-                        <div class="todo-card tabs-background-color p-2 m-2 rounded">
-                            <h5 class="grau-font">{{$allTodoTask['title']}}</h5>
-                            <div class="d-flex flex-column flex-md-row justify-content-md-between">
-                                <div>
-                                    <p class="grau-font" style="font-size: small;">{{$allTodoTask['description']}} </p>
-                                </div>
-                                <div class="d-flex text-white todo-tasks">
+                        @foreach($allTodoTasks as $allTodoTask)
+                            <div class="todo-card tabs-background-color p-2 m-2 rounded">
+                                <h5 class="grau-font">{{$allTodoTask['title']}}</h5>
+                                <div class="d-flex flex-column flex-md-row justify-content-md-between">
                                     <div>
-                                        <a href="{{ route('todo.edit', $allTodoTask['id']) }}">
-                                            <span class="p-1 todo-icon white-img-color"><x-tabler-pencil/></span>
-                                        </a>
+                                        <p class="grau-font"
+                                           style="font-size: small;">{{$allTodoTask['description']}} </p>
                                     </div>
-                                    <div>
+                                    <div class="d-flex text-white todo-tasks">
+                                        <div>
+                                            <a href="{{ route('todo.edit', $allTodoTask['id']) }}">
+                                                <span class="p-1 todo-icon white-img-color"><x-tabler-pencil/></span>
+                                            </a>
+                                        </div>
+                                        <div>
                                         <span class="p-1 todo-icon"><delete-task
                                                 :task-id="{{json_encode($allTodoTask['id'])}}"></delete-task></span>
-                                    </div>
-                                    <div>
-                                        <span class="p-1 cheked-icon"><x-bi-check-circle-fill/></span>
+                                        </div>
+                                        <div>
+                                            <span class="p-1 cheked-icon"><x-bi-check-circle-fill/></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     @endif
                 </div>
                 <div class="tabs-background-color m-3 grid-3 rounded">
@@ -115,7 +117,8 @@
                         <p class="text-white center">“Nothing is as permanent as a temporary solution that works”</p>
                     </div>
                     <div class="tabs-background-color p-3 m-2 rounded">
-                        <p class="text-white center">“The best code is no code at all. Because then there are no bugs.”</p>
+                        <p class="text-white center">“The best code is no code at all. Because then there are no
+                            bugs.”</p>
                     </div>
                 </div>
                 <div class="grid-6">

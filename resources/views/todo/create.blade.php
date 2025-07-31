@@ -4,7 +4,7 @@
 </div>
 <form action="{{ route('todo.store') }}" method="POST">
     @csrf
-    <div class="container mt-5">
+    <div class="container mt-5 slideDownFadeIn">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
