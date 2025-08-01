@@ -1,16 +1,11 @@
+on: push
 name: 🚀 Deploy website on push
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: 🚚 Checkout latest code
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
       - name: ⚡ Set up PHP
@@ -38,7 +33,7 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: 📂 Upload files via FTP
+      - name: 📂 Sync files with cleanup
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.urosdeveloper.com
@@ -52,14 +47,3 @@ jobs:
             .git/
             .github/
           sync-strategy: times
-
-      - name: 🖥️ Run migrations and seed via SSH
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ftp.urosdeveloper.com
-          username: laravel-stock-project
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/urosdeve/dashboard.urosdeveloper.com
-            php artisan migrate --force
-            php artisan db:seed --force
