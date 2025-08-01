@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receipt;
+use App\Models\ReceiptCategory;
 use Illuminate\Http\Request;
 
 class ReceiptController extends Controller
@@ -29,24 +31,30 @@ class ReceiptController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'category' => 'required|string'
-        ]);
-        dd($request);
 
-        // Get previous session data
+        $validated = $request->validate([
+            'receipt_category_id' => 'required|exists:receipt_categories,id',
+        ]);
+
         $amount = session('amount');
         $currency = session('currency');
 
-        // insert data
+        if (!$amount || !$currency) {
+            return redirect()->route('receipt.step1')->withErrors(['session' => 'Session expired. Please enter the receipt again.']);
+        }
+
         Receipt::create([
             'amount' => $amount,
             'currency' => $currency,
-            'category' => $validated['category'],
+            'receipt_category_id' => $validated['receipt_category_id'],
         ]);
 
+        // Optionally clear session
         session()->forget(['amount', 'currency']);
 
-        return redirect()->route('welcome')->with('success', 'Receipt added!');
+        return redirect()->route('welcome')->with('success', 'Receipt successfully saved!');
     }
+
+
+
 }

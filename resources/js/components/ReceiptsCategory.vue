@@ -7,14 +7,14 @@
         <div class="row g-3">
             <div
                 v-for="item in currentCategoriesSorted"
-                :key="item.value"
+                :key="item.id"
                 class="col-6 col-md-4 col-lg-4"
             >
                 <div
                     class="card h-100 cursor-pointer"
                     :class="{
-            'border-primary': selectedCategory === item.value,
-            'border-2': selectedCategory === item.value
+            'border-primary': selectedCategoryId === item.id,
+            'border-2': selectedCategoryId === item.id
           }"
                     @click="handleClick(item)"
                 >
@@ -23,25 +23,35 @@
                             :src="item.img"
                             :alt="item.label"
                             class="category-img"
-                            :class="{ selected: selectedCategory === item.value }"
+                            :class="{ selected: selectedCategoryId === item.id }"
                         />
                     </div>
-                    <div class="text-white fw-semibold text-center p-2" style="background-color: #0a001f;">
+                    <div
+                        class="text-white fw-semibold text-center p-2"
+                        style="background-color: #0a001f;"
+                    >
                         {{ item.label }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <button
-            v-if="isSubCategoryView"
-            class="btn btn-light mt-4"
-            @click="goBack"
-        >
+        <button v-if="isSubCategoryView" class="btn btn-light mt-4" @click="goBack">
             ← Go back
         </button>
 
-        <input type="hidden" name="category" :value="selectedCategory" required />
+        <!-- Hidden input šalje ID kategorije -->
+        <input
+            type="hidden"
+            name="receipt_category_id"
+            :value="selectedCategoryId"
+            required
+        />
+        <input
+            type="hidden"
+            name="receipt_category_label"
+            :value="selectedCategoryLabel"
+        />
     </div>
 </template>
 
@@ -49,30 +59,32 @@
 export default {
     data() {
         return {
-            selectedCategory: null,
+            selectedCategoryId: null,
             isSubCategoryView: false,
+            selectedCategoryLabel: '',
 
+            // Pretpostavljam da ti mainCategories i foodSubcategories sada sadrže id, label i img
             mainCategories: [
-                { value: 'education', label: 'Education', img: '/images/receipt-logos/education.png' },
-                { value: 'gifts', label: 'Gifts', img: '/images/receipt-logos/gifts.jpg' },
-                { value: 'nightLife', label: 'Nightlife', img: '/images/receipt-logos/nightLife.png' },
-                { value: 'opel', label: 'Opel', img: '/images/receipt-logos/opel.png' },
-                { value: 'cost', label: 'Cost of living', img: '/images/receipt-logos/racuni.png' },
-                { value: 'renovation', label: 'Renovation', img: '/images/receipt-logos/renoviranje.jpg' },
-                { value: 'travel', label: 'Travel', img: '/images/receipt-logos/travel.jpg' },
-                { value: 'other', label: 'Other costes', img: '/images/receipt-logos/other.jpg' },
-                { value: 'food', label: 'Food', img: '/images/receipt-logos/food.jpg' }
+                { id: 1, label: 'Education', img: '/images/receipt-logos/education.png' },
+                { id: 2, label: 'Gifts', img: '/images/receipt-logos/gifts.jpg' },
+                { id: 3, label: 'Nightlife', img: '/images/receipt-logos/nightLife.png' },
+                { id: 4, label: 'Opel', img: '/images/receipt-logos/opel.png' },
+                { id: 5, label: 'Cost of living', img: '/images/receipt-logos/racuni.png' },
+                { id: 6, label: 'Renovation', img: '/images/receipt-logos/renoviranje.jpg' },
+                { id: 7, label: 'Travel', img: '/images/receipt-logos/travel.jpg' },
+                { id: 8, label: 'Other costes', img: '/images/receipt-logos/other.jpg' },
+                { id: 9, label: 'Food', img: '/images/receipt-logos/food.jpg' }
             ],
 
             foodSubcategories: [
-                { value: 'aldi', label: 'Aldi', img: '/images/receipt-logos/food/aldi.jpg' },
-                { value: 'aroma', label: 'Aroma', img: '/images/receipt-logos/food/aroma.png' },
-                { value: 'butcher', label: 'Butcher', img: '/images/receipt-logos/food/butcher.png' },
-                { value: 'fruit', label: 'Fruits', img: '/images/receipt-logos/food/fruit.png' },
-                { value: 'lidl', label: 'Lidl', img: '/images/receipt-logos/food/Lidl-Logo.svg.png' },
-                { value: 'maxi', label: 'Maxi', img: '/images/receipt-logos/food/maxi.jpg' },
-                { value: 'mcdonalds', label: 'McDonalds', img: '/images/receipt-logos/food/McDonalds.svg.png' },
-                { value: 'rewe', label: 'Rewe', img: '/images/receipt-logos/food/rewe.png' }
+                { id: 10, label: 'Aldi', img: '/images/receipt-logos/food/aldi.jpg' },
+                { id: 11, label: 'Aroma', img: '/images/receipt-logos/food/aroma.png' },
+                { id: 12, label: 'Butcher', img: '/images/receipt-logos/food/butcher.png' },
+                { id: 13, label: 'Fruits', img: '/images/receipt-logos/food/fruit.png' },
+                { id: 14, label: 'Lidl', img: '/images/receipt-logos/food/Lidl-Logo.svg.png' },
+                { id: 15, label: 'Maxi', img: '/images/receipt-logos/food/maxi.jpg' },
+                { id: 16, label: 'McDonalds', img: '/images/receipt-logos/food/McDonalds.svg.png' },
+                { id: 17, label: 'Rewe', img: '/images/receipt-logos/food/rewe.png' }
             ]
         }
     },
@@ -81,22 +93,24 @@ export default {
             return this.isSubCategoryView ? this.foodSubcategories : this.mainCategories;
         },
         currentCategoriesSorted() {
-            // Sort by label alphabetically
             return this.currentCategories.slice().sort((a, b) => a.label.localeCompare(b.label));
         }
     },
     methods: {
         handleClick(category) {
-            if (!this.isSubCategoryView && category.value === 'food') {
+            if (!this.isSubCategoryView && category.label.toLowerCase() === 'food') {
                 this.isSubCategoryView = true;
-                this.selectedCategory = null;
+                this.selectedCategoryId = null;
+                this.selectedCategoryLabel = '';
             } else {
-                this.selectedCategory = category.value;
+                this.selectedCategoryId = category.id;
+                this.selectedCategoryLabel = category.label;
             }
         },
         goBack() {
             this.isSubCategoryView = false;
-            this.selectedCategory = null;
+            this.selectedCategoryId = null;
+            this.selectedCategoryLabel = '';
         }
     }
 }
