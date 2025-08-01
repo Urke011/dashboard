@@ -1,9 +1,18 @@
 <template>
     <div>
-        <label class="text-white mb-2 fw-semibold" for="category">
-            {{ isSubCategoryView ? 'Where did you shop?' : 'Choose the category of the bill for payment' }}
-        </label>
+        <div class="d-flex justify-content-between">
+            <div>
+                <label class="text-white mb-3 fw-semibold" for="category">
+                    {{ isSubCategoryView ? 'Where did you shop?' : 'Choose the category of the bill for payment' }}
+                </label>
+            </div>
+            <div>
+                <button v-if="isSubCategoryView" class="btn btn-light mb-3" @click="goBack">
+                    ← Go back
+                </button>
+            </div>
 
+        </div>
         <div class="row g-3">
             <div
                 v-for="item in currentCategoriesSorted"
@@ -35,11 +44,6 @@
                 </div>
             </div>
         </div>
-
-        <button v-if="isSubCategoryView" class="btn btn-light mt-4" @click="goBack">
-            ← Go back
-        </button>
-
         <!-- Hidden input sends ID -->
         <input
             type="hidden"
