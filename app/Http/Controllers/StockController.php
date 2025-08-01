@@ -57,7 +57,7 @@ class StockController extends Controller
     {
         //max 25 calls
         $apiKey = config('services.api_stock_service.key');
-        $symbols = ["MSFT", "AAPL","KO","GM", "MCD","SPY"];
+        $symbols = ["MSFT", "AAPL","KO","GM", "MCD","CSPX","SPY"];
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
 
         try {
@@ -94,7 +94,6 @@ class StockController extends Controller
                     $data
                 );
             }
-
             return $stocks = Stock::all();
 
         } catch (\Exception $e) {
