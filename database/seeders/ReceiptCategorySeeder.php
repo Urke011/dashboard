@@ -13,7 +13,6 @@ class ReceiptCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Glavne kategorije
         $mainCategories = [
             ['id' => 1, 'label' => 'Education', 'img' => '/images/receipt-logos/education.png'],
             ['id' => 2, 'label' => 'Gifts', 'img' => '/images/receipt-logos/gifts.jpg'],
@@ -35,7 +34,6 @@ class ReceiptCategorySeeder extends Seeder
             ]);
         }
 
-        // Potkategorije hrane (parent_id = 9)
         $foodSubcategories = [
             ['label' => 'Aldi', 'img' => '/images/receipt-logos/food/aldi.jpg'],
             ['label' => 'Aroma', 'img' => '/images/receipt-logos/food/aroma.png'],

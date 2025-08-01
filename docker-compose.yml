@@ -1,7 +1,5 @@
-
 services:
     web:
-        image: app-name:latest
         build:
             target: web
             context: .
@@ -9,8 +7,11 @@ services:
             - .env
         ports:
             - "8080:80"
+           # - "5173:5173"  # Port za Vite dev server (vue)
         volumes:
-            - .:/var/www/html
+            - .:/var/www/html:cached
+            - vendor_data:/var/www/html/vendor
+            - node_modules_data:/var/www/html/node_modules
         depends_on:
             - db
         networks:
@@ -25,9 +26,9 @@ services:
             MYSQL_DATABASE: laravel
             MYSQL_USER: uros
             MYSQL_PASSWORD: password
-            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # This allows MySQL to run without a root password
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         ports:
-            - "3307:3306"  # Changing the host port to 3307
+            - "3307:3306"
         volumes:
             - dbdata:/var/lib/mysql
         networks:
@@ -40,7 +41,7 @@ services:
         environment:
             PMA_HOST: db
             PMA_USER: uros
-            PMA_PASSWORD:  password
+            PMA_PASSWORD: password
         networks:
             - app-network
 
@@ -50,3 +51,5 @@ networks:
 
 volumes:
     dbdata:
+    vendor_data:
+    node_modules_data:

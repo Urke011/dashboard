@@ -40,7 +40,7 @@
             ← Go back
         </button>
 
-        <!-- Hidden input šalje ID kategorije -->
+        <!-- Hidden input sends ID -->
         <input
             type="hidden"
             name="receipt_category_id"
@@ -63,7 +63,6 @@ export default {
             isSubCategoryView: false,
             selectedCategoryLabel: '',
 
-            // Pretpostavljam da ti mainCategories i foodSubcategories sada sadrže id, label i img
             mainCategories: [
                 { id: 1, label: 'Education', img: '/images/receipt-logos/education.png' },
                 { id: 2, label: 'Gifts', img: '/images/receipt-logos/gifts.jpg' },
