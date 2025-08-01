@@ -1,7 +1,5 @@
+on: push
 name: 🚀 Deploy website on push
-
-on: [push]
-
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -49,14 +47,6 @@ jobs:
             .git/
             .github/
           sync-strategy: times
-
-      - name: 🚀 Run migrations and seeders on server via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
           script: |
             cd ~/dashboard.urosdeveloper.com
             php artisan config:clear
