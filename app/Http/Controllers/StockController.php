@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 
 class StockController extends Controller
 {
-//test update env file
+
     public function getAllDashboardValue()
     {
 
