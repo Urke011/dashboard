@@ -17,4 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-
+//call Scheduler for Stocks
+$schedule = app(Illuminate\Console\Scheduling\Schedule::class);
+$schedule->command('dashboard:refresh')->dailyAt('07:00');

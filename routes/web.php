@@ -21,6 +21,4 @@ Route::post('/ocr-upload', [OcrController::class, 'processImage'])->name('ocr.pr
 Route::post('/receipt-step1', [ReceiptController::class, 'step1'])->name('receipt.step1');
 Route::get('/receipt-step2', [ReceiptController::class, 'step2'])->name('receipt.step2');
 Route::post('/receipt-store', [ReceiptController::class, 'store'])->name('receipt.store');
-//call Scheduler for Stocks
-$schedule = app(Illuminate\Console\Scheduling\Schedule::class);
-$schedule->command('dashboard:refresh')->dailyAt('07:00');
+
