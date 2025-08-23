@@ -50,7 +50,7 @@ jobs:
           username: urosdeve@dashboard.urosdeveloper.com
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /
-          local-dir: .   # ceo projekat
+          local-dir: ./
           exclude: |
             node_modules/
             storage/
