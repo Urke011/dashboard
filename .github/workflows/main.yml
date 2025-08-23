@@ -42,7 +42,6 @@ jobs:
           server-dir: /
           exclude: |
             node_modules/
-            vendor/
             storage/
             .git/
             .github/
