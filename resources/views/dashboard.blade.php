@@ -127,15 +127,6 @@
             </div>
         </div>
     </div>
-    <div class="hover-container m-1">
-        <div class="text-end">
-            <form action="{{ route('reset.cache') }}" method="POST">
-                @csrf
-                <button type="submit">Reset</button>
-            </form>
-            <p class="text-white" style="font-size: x-small;">Number of calls today:
-                <strong>{{ $callCount }}</strong><br><span>Left calls: {{ $maxCalls - $callCount }}</span></p>
-        </div>
-    </div>
+
 </body>
 @include('footer')

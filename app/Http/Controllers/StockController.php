@@ -14,30 +14,17 @@ class StockController extends Controller
 
     public function getAllDashboardValue()
     {
-
-        $maxCalls = 2;
         $currentDateTime = $this->currentTime();
         $currentDateTime = str_replace('-', '/', $currentDateTime);
         list($date, $time) = explode(" ", $currentDateTime);
 
         $date = substr($date, 0, 10);
+        // call with Cron at 7am
+        // $allWeatherRecords = $this->getWeather();
+        // $stocks = $this->getStocks();
 
-        $cacheKey = "dashboard_calls_{$date}";
-
-        $callCount = Cache::get($cacheKey, 0);
-        //dd($callCount);
-        $limitReached = $callCount >= $maxCalls;
-
-
-        if ($callCount < $maxCalls) {
-            $allWeatherRecords = $this->getWeather();
-            $stocks = $this->getStocks();
-            Cache::put($cacheKey, $callCount + 1, now()->endOfDay());
-        } else {
-            $allWeatherRecords = $this->showAllWeatherValues();
-            $stocks = $this->selectSavedStock();
-        }
-
+        $allWeatherRecords = $this->showAllWeatherValues();
+        $stocks = $this->selectSavedStock();
         $todos = $this->getAllTodoTasks();
 
         return view('dashboard', [
@@ -46,14 +33,11 @@ class StockController extends Controller
             'time' => $time,
             'stocks' => $stocks,
             'allTodoTasks' => $todos,
-            'callCount' => $callCount,
-            'limitReached' => $limitReached,
-            'maxCalls' => $maxCalls,
         ]);
     }
 
 
-    private function getStocks()
+    public function getStocks()
     {
         //max 25 calls
         $apiKey = config('services.api_stock_service.key');
@@ -117,7 +101,7 @@ class StockController extends Controller
         return $date;
     }
 
-    private function getWeather()
+    public function getWeather()
     {
         $apiKey = config('services.api_weather_service.key');
         $client = new Client();
