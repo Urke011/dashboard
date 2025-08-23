@@ -1,11 +1,9 @@
 on: push
 name: 🚀 Deploy website on push
-
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -41,10 +39,11 @@ jobs:
           server: ftp.urosdeveloper.com
           username: urosdeve@dashboard.urosdeveloper.com
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /home/urosdeve/dashboard.urosdeveloper.com/
-          local-dir: ./                                           
+          server-dir: /
           exclude: |
             node_modules/
+            vendor/
             storage/
             .git/
             .github/
+          sync-strategy: times
