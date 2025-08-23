@@ -7,36 +7,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚚 Get latest code
+      - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
-      # Upload source code to server
-      - name: 📂 Sync code to server
+      - name: 📂 Upload code to server
         uses: appleboy/scp-action@v0.1.6
         with:
           host: dashboard.urosdeveloper.com
-          username: urosdeve
+          username: urosdeve@dashboard.urosdeveloper.com
           port: 2217
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."
+          source: "./"
           target: "/home/urosdeve/dashboard.urosdeveloper.com"
-          exclude: |
-            node_modules/
-            vendor/
-            storage/
-            .git/
-            .github/
+          overwrite: true
 
-      # Run Composer and npm directly on server
-      - name: ⚡ Install dependencies on server
+      - name: 🔧 Run composer & npm on server
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: dashboard.urosdeveloper.com
-          username: urosdeve
+          username: urosdeve@dashboard.urosdeveloper.com
           port: 2217
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/urosdeve/dashboard.urosdeveloper.com
-            composer install --no-dev --optimize-autoloader
+            php -r "copy('.env.example', '.env');" || true
+            php ~/bin/composer install --no-dev --optimize-autoloader
             npm install
             npm run build
+            php artisan migrate --force
