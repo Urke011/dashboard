@@ -1,51 +1,42 @@
 on: push
 name: 🚀 Deploy website on push
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: ⚡ Set up PHP
-        uses: shivammathur/setup-php@v2
+      # Upload source code to server
+      - name: 📂 Sync code to server
+        uses: appleboy/scp-action@v0.1.6
         with:
-          php-version: '8.3'
-          tools: composer
-
-      - name: 📦 Install PHP dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: 🏗️ Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: 📦 Install Node.js dependencies
-        run: npm install
-
-      - name: 🎨 Build frontend assets
-        run: npm run build
-
-      - name: 🔑 Create .env file on server
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
-
-      - name: 📂 Sync files with cleanup
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ftp.urosdeveloper.com
-          username: urosdeve@dashboard.urosdeveloper.com
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /
+          host: dashboard.urosdeveloper.com
+          username: urosdeve
+          port: 2217
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."
+          target: "/home/urosdeve/dashboard.urosdeveloper.com"
           exclude: |
             node_modules/
             vendor/
             storage/
             .git/
             .github/
-          sync-strategy: times
-#
 
+      # Run Composer and npm directly on server
+      - name: ⚡ Install dependencies on server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: dashboard.urosdeveloper.com
+          username: urosdeve
+          port: 2217
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/urosdeve/dashboard.urosdeveloper.com
+            composer install --no-dev --optimize-autoloader
+            npm install
+            npm run build
