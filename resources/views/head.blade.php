@@ -8,17 +8,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    @if (app()->environment('local'))
-        @vite(['resources/js/app.js', 'resources/sass/app.scss'])
-    @else
-        <!-- Only use production build if manifest exists -->
-        @if (file_exists(public_path('build/manifest.json')))
-            @vite(['resources/js/app.js', 'resources/sass/app.scss'])
-        @else
-            <!-- Fallback CSS/JS if build is missing -->
-            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-            <script src="{{ asset('js/app.js') }}" type="module"></script>
-        @endif
-    @endif
+    @vite(['resources/js/app.js', 'resources/sass/app.scss'])
+
 </head>
 <div id="app">
