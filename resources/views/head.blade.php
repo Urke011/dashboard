@@ -8,16 +8,17 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    @if (env('APP_ENV') === 'local')
-        <!-- Vite dev server for local -->
+    @if (app()->environment('local'))
         @vite(['resources/js/app.js', 'resources/sass/app.scss'])
     @else
-        <!-- Production assets
-        <link href="{{ asset('build/assets/app-C5PQxqkl.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/assets/app-CQmzQVPJ.css') }}" rel="stylesheet">
-        <script src="{{ asset('build/assets/app-XD3OQ2eG.js') }}" type="module"></script>
-        -->
-        @vite(['resources/js/app.js', 'resources/sass/app.scss'])
+        <!-- Only use production build if manifest exists -->
+        @if (file_exists(public_path('build/manifest.json')))
+            @vite(['resources/js/app.js', 'resources/sass/app.scss'])
+        @else
+            <!-- Fallback CSS/JS if build is missing -->
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+            <script src="{{ asset('js/app.js') }}" type="module"></script>
+        @endif
     @endif
 </head>
 <div id="app">
