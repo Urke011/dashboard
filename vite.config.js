@@ -24,8 +24,15 @@ export default defineConfig(({ mode }) => {
         },
         build: {
             outDir: 'public/build',
-            manifest: true,
             emptyOutDir: true,
+            manifest: 'manifest.json',
+            rollupOptions: {
+                input: [
+                    'resources/css/app.css',
+                    'resources/js/app.js',
+                    'resources/sass/app.scss',
+                ],
+            },
         },
     };
 });
