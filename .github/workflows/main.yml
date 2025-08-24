@@ -1,37 +1,49 @@
 on: push
 name: 🚀 Deploy website on push
-
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: 🚚 Checkout code
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: 📂 Upload code to server
-        uses: appleboy/scp-action@v0.1.6
+      - name: ⚡ Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          host: dashboard.urosdeveloper.com
-          username: urosdeve@dashboard.urosdeveloper.com
-          port: 2217
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./"
-          target: "/home/urosdeve/dashboard.urosdeveloper.com"
-          overwrite: true
+          php-version: '8.3'
+          tools: composer
 
-      - name: 🔧 Run composer & npm on server
-        uses: appleboy/ssh-action@v0.1.7
+      - name: 📦 Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: 🏗️ Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          host: dashboard.urosdeveloper.com
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install Node.js dependencies
+        run: npm install
+
+      - name: 🎨 Build frontend assets
+        run: npm run build
+
+      - name: 🔑 Create .env file on server
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: 📂 Sync files with cleanup
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.urosdeveloper.com
           username: urosdeve@dashboard.urosdeveloper.com
-          port: 2217
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/urosdeve/dashboard.urosdeveloper.com
-            php -r "copy('.env.example', '.env');" || true
-            php ~/bin/composer install --no-dev --optimize-autoloader
-            npm install
-            npm run build
-            php artisan migrate --force
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+          exclude: |
+            node_modules/
+            vendor/
+            storage/
+            .git/
+            .github/
+          sync-strategy: times
