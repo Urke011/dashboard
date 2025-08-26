@@ -4,7 +4,7 @@ use App\Http\Controllers\CacheController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MailController;
 
 Route::post('/reset-cache', [CacheController::class, 'resetCache'])->name('reset.cache');
 Route::get('/', [StockController::class, 'getAllDashboardValue'])->name('welcome');
@@ -23,3 +23,6 @@ Route::get('/receipt-step2', [ReceiptController::class, 'step2'])->name('receipt
 Route::post('/receipt-store', [ReceiptController::class, 'store'])->name('receipt.store');
 
 Route::get('/test', [ReceiptController::class, 'showWeekendSpending'])->name('test');
+
+Route::get('/email-form', [MailController::class, 'showForm']);
+Route::post('/send-mail', [MailController::class, 'sendMail'])->name('send-mail');
