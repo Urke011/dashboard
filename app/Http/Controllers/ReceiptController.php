@@ -81,7 +81,7 @@ class ReceiptController extends Controller
         foreach ($categories as $category) {
             $allReceipts = collect();
 
-            // dodajemo svoje račune
+            // add our accounts
             $allReceipts = $allReceipts->merge($category->receipts);
 
             // add child category accounts
@@ -91,7 +91,6 @@ class ReceiptController extends Controller
                     $allReceipts->push($receipt);
                 }
             }
-
             $categoriesData->push([
                 'category' => $category,
                 'receipts' => $allReceipts,
@@ -108,7 +107,7 @@ class ReceiptController extends Controller
                 if ($receipt->currency < 3) {
                     $receipt->amount *= 117;
                 }
-                $receipt->formatted_amount = number_format($receipt->amount, 0, ',', '.') . ' din';
+                $receipt->formatted_amount = number_format($receipt->amount, 0, ',', '.') . ' rsd';
                 if (!isset($receipt->category_name)) {
                     $receipt->category_name = $data['category']->label;
                 }

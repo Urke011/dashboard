@@ -14,31 +14,12 @@
                         @if($data['receipts']->isNotEmpty())
                             <ul style="list-style: none; padding: 0; margin: 0;">
                                 @foreach($data['receipts'] as $receipt)
-                                    <li>{{ $receipt->category_name }}: {{ $receipt->formatted_amount }}</li>
+                                    <li>{{ $receipt->formatted_amount }}</li>
                                 @endforeach
                             </ul>
-
-                            {{-- If food is a category, display subcategories --}}
-                            @if($data['category']->label === 'food')
-                                @php
-                                    $childCategories = collect($categoriesData)
-                                        ->filter(fn($c) => $c['category']->parent_id === $data['category']->id);
-                                @endphp
-
-                                @if($childCategories->isNotEmpty())
-                                    <hr>
-                                    <strong>Podkategorije (ukupno u food):</strong>
-                                    <ul style="list-style: none; padding: 0; margin: 0;">
-                                        @foreach($childCategories as $child)
-                                            <li>{{ $child['category']->label }}: {{ number_format($child['totalAmount'],0,',','.') }} rsd</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            @endif
-
                             <hr>
                             <p>
-                                <strong>Total: {{ number_format($data['totalAmount'],0,',','.') }} rsd
+                                <strong>Total: {{ $data['totalAmount'],0,',','.' }} rsd
                                     ({{ $data['percent'] }}%)</strong>
                             </p>
                         @else
