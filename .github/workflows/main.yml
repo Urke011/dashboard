@@ -44,6 +44,6 @@ jobs:
             node_modules/
             vendor/
             storage/
-            .git/
+            **/.git/**
             .github/
           sync-strategy: times
