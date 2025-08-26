@@ -24,5 +24,3 @@ Route::post('/receipt-store', [ReceiptController::class, 'store'])->name('receip
 
 Route::get('/test', [ReceiptController::class, 'showWeekendSpending'])->name('test');
 
-Route::get('/email-form', [MailController::class, 'showForm']);
-Route::post('/send-mail', [MailController::class, 'sendMail'])->name('send-mail');
