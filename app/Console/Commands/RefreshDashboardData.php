@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Http\Controllers\StockController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schedule;
 
 class RefreshDashboardData extends Command
 {
@@ -18,11 +19,10 @@ class RefreshDashboardData extends Command
 
     public function handle()
     {
-        $controller = new StockController();
-        $controller->getWeather();
-        $controller->getStocks();
 
-        Log::info('Dashboard API data was refreshed at 7am.');
-        $this->info('Dashboard API data was refreshed at 7am.');
+        $controller = app(StockController::class);
+        $controller->TaskScheduleCron();
+
     }
 }
+

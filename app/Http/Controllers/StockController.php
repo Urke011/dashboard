@@ -7,11 +7,19 @@ use App\Models\Todo;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Weather;
-use Illuminate\Support\Facades\Cache;
 
 class StockController extends Controller
 {
+    public function TaskScheduleCron(){
+        //update stocks and weather on dashboard
+         $allWeatherRecords = $this->getWeather();
+         $stocks = $this->getStocks();
 
+        return view('dashboard', [
+            'weatherRecords' => $allWeatherRecords,
+            'stocks' => $stocks,
+        ]);
+    }
     public function getAllDashboardValue()
     {
         $currentDateTime = $this->currentTime();
@@ -19,9 +27,6 @@ class StockController extends Controller
         list($date, $time) = explode(" ", $currentDateTime);
 
         $date = substr($date, 0, 10);
-        // call with Cron at 7am
-        // $allWeatherRecords = $this->getWeather();
-        // $stocks = $this->getStocks();
 
         $allWeatherRecords = $this->showAllWeatherValues();
         $stocks = $this->selectSavedStock();
