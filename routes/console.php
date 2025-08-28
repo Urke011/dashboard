@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('dashboard:refresh')->dailyAt('07:00')->timezone('Europe/Berlin');
-
+Schedule::command('app:send-weekly-receipts-report')->weeklyOn(1, '7:00')->timezone('Europe/Berlin');

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WeekendMailReport;
 use App\Models\Receipt;
 use App\Models\ReceiptCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReceiptController extends Controller
 {
@@ -58,7 +61,8 @@ class ReceiptController extends Controller
 
     public function showWeekendSpending()
     {
-        $allCategories = ReceiptCategory::with(['receipts', 'children.receipts'])->get();
+
+        $allCategories = $this->getWeeklyReceipts();
 
         // 1. Collection of all bills by category
         $categoriesData = $this->getAllReceiptsForCategories($allCategories);
@@ -150,17 +154,55 @@ class ReceiptController extends Controller
     }
 
 
+    public function sendWeekendSpendingMail()
+    {
+        try {
+            //$allCategories = ReceiptCategory::with(['receipts', 'children.receipts'])->get();
+
+            $allCategories = $this->getWeeklyReceipts();
+            $categoriesData = $this->getAllReceiptsForCategories($allCategories);
+            $categoriesData = $this->formatReceipts($categoriesData);
+            $categoriesData = $this->calculatePercentages($categoriesData);
+
+            $foodSubcategories = $this->getFoodSubcategoriesData($categoriesData);
+
+            // remove the Food subcategories from the main table
+            $categoriesData = $categoriesData->filter(function ($data) {
+                return $data['category']->id === 9 || $data['category']->parent_id === null;
+            });
+
+            // sort the main categories by percentage in descending order
+            $categoriesData = $categoriesData->sortByDesc('percent');
 
 
+            return  Mail::to('rajkovicuros011@gmail.com')
+                ->send(new WeekendMailReport($categoriesData, $foodSubcategories));
 
+        } catch (\Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
 
+    private function getFoodSubcategoriesData($categoriesData)
+    {
+        return $categoriesData
+            ->filter(fn($data) => $data['category']->parent_id === 9)
+            ->sortByDesc('percent');
+    }
 
+    public function getWeeklyReceipts()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY);
 
-
-
-
-
-
-
+        return ReceiptCategory::with([
+            'receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            },
+            'children.receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            }
+        ])->get();
+    }
 
 }

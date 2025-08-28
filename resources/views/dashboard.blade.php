@@ -15,7 +15,7 @@
         <a class="text-white" style="text-decoration: none !important;" href="{{ route('ocr.form') }}">
             <div class="p-3"
                  style="background-color: #42869e; width: fit-content; position: fixed; right: 0; top: 0; border: 1px solid #fff; z-index: 1;">
-                <h3>Add receipt(test)</h3>
+                <h3>Add receipt</h3>
             </div>
         </a>
         <div class="container">

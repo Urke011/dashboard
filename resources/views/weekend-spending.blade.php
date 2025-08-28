@@ -19,7 +19,7 @@
                             </ul>
                             <hr>
                             <p>
-                                <strong>Total: {{ $data['totalAmount'],0,',','.' }} rsd
+                                <strong>Total: {{ number_format($data['totalAmount'], 0, ',', '.') }} rsd
                                     ({{ $data['percent'] }}%)</strong>
                             </p>
                         @else

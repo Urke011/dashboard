@@ -4,7 +4,6 @@ use App\Http\Controllers\CacheController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MailController;
 
 Route::post('/reset-cache', [CacheController::class, 'resetCache'])->name('reset.cache');
 Route::get('/', [StockController::class, 'getAllDashboardValue'])->name('welcome');
