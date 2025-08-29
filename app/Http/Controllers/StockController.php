@@ -86,8 +86,8 @@ class StockController extends Controller
             return $stocks = Stock::all();
 
         } catch (\Exception $e) {
-            // Handle any errors that occur during the API request
-            return view('dashboard', ['error' => $e->getMessage()]);
+            \Log::error($e->getMessage());
+            return [];
         }
     }
 
@@ -120,7 +120,6 @@ class StockController extends Controller
                 $request = "https://api.openweathermap.org/data/2.5/forecast?id={$cityId}&appid={$apiKey}";
                 $response = $client->get($request);
                 $data = json_decode($response->getBody(), true);
-
                 // Convert temperature from Kelvin to Celsius
                 $kelvinTemp = $data['list'][0]['main']['temp'];
                 $celsiusTemp = $kelvinTemp - 273.15;
@@ -133,8 +132,8 @@ class StockController extends Controller
                 );
             }
         } catch (\Exception $e) {
-            // Handle any errors that occur during the API request
-            return view('dashboard', ['error' => $e->getMessage()]);
+            \Log::error($e->getMessage());
+            return [];
         }
         return $allWeatherRecords = Weather::all()->toArray();
     }
