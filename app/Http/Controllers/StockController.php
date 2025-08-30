@@ -14,11 +14,7 @@ class StockController extends Controller
         //update stocks and weather on dashboard
          $allWeatherRecords = $this->getWeather();
          $stocks = $this->getStocks();
-
-        return view('dashboard', [
-            'weatherRecords' => $allWeatherRecords,
-            'stocks' => $stocks,
-        ]);
+         $this->getAllDashboardValue();
     }
     public function getAllDashboardValue()
     {
@@ -48,13 +44,13 @@ class StockController extends Controller
         $apiKey = config('services.api_stock_service.key');
         $symbols = ["MSFT", "AAPL","KO","GM", "MCD","SPYL"];
         $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
-
+        $client = new Client();
         try {
             foreach ($symbols as $symbol) {
                 $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
                 // Make a GET request
-                $response = file_get_contents($apiUrl); // Send the request
-                $data = json_decode($response, true); // Decode the response to an associative array
+                $response = $client->get($apiUrl); // Send the request
+                $data = json_decode($response->getBody(), true); // Decode the response to an associative array
                 if (!isset($data['Time Series (5min)'])) {
                     // Skip if the response doesn't contain the necessary data
                     continue;
