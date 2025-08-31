@@ -8,5 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('dashboard:refresh')->dailyAt('07:00')->timezone('Europe/Berlin');
+Schedule::command('dashboard:refresh')->twiceDaily(7, 13)->timezone('Europe/Berlin');
 Schedule::command('app:send-weekly-receipts-report')->weeklyOn(1, '7:00')->timezone('Europe/Berlin');
