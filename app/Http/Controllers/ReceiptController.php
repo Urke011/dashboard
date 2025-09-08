@@ -218,5 +218,12 @@ class ReceiptController extends Controller
             }
         ])->get();
     }
+    public function showCurrentWeekReceipts()
+    {
+        $data = $this->getCurrentWeekReceipts();
 
+        return view('weekend-spending', [
+            'categoriesData' => $data
+        ]);
+    }
 }
