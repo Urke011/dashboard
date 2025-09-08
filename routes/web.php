@@ -21,5 +21,5 @@ Route::post('/receipt-step1', [ReceiptController::class, 'step1'])->name('receip
 Route::get('/receipt-step2', [ReceiptController::class, 'step2'])->name('receipt.step2');
 Route::post('/receipt-store', [ReceiptController::class, 'store'])->name('receipt.store');
 
-Route::get('/test', [ReceiptController::class, 'getCurrentWeekReceipts'])->name('test');
+Route::get('/test', [ReceiptController::class, 'showWeekendSpending'])->name('test');
 
