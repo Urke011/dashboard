@@ -204,5 +204,19 @@ class ReceiptController extends Controller
             }
         ])->get();
     }
+    public function getCurrentWeekReceipts()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY);
+
+        return ReceiptCategory::with([
+            'receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            },
+            'children.receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            }
+        ])->get();
+    }
 
 }
