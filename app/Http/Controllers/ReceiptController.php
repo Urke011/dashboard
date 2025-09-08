@@ -192,8 +192,8 @@ class ReceiptController extends Controller
 
     public function getWeeklyReceipts()
     {
-        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
-        $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY);
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY)->subWeek();
+        $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY)->subWeek();
 
         return ReceiptCategory::with([
             'receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
