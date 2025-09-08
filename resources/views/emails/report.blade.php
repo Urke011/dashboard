@@ -15,7 +15,7 @@
                 {{ $data['category']->label }}
             </td>
             <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">
-                {{ number_format($data['totalAmount'], 0, ',', '.') }}<span style="white-space:nowrap;">rsd</span>
+                <span>{{ number_format($data['totalAmount'], 0, ',', '.') }}</span><span style="white-space:nowrap;">rsd</span>
             </td>
             <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">
                 {{ $data['percent'] }}%
