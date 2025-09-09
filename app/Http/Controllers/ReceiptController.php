@@ -62,7 +62,7 @@ class ReceiptController extends Controller
     public function showWeekendSpending()
     {
 
-        $allCategories = $this->getWeeklyReceipts();
+        $allCategories = $this->getCurrentWeekReceipts();
 
         // 1. Collection of all bills by category
         $categoriesData = $this->getAllReceiptsForCategories($allCategories);
@@ -204,6 +204,19 @@ class ReceiptController extends Controller
             }
         ])->get();
     }
+    public function getCurrentWeekReceipts()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
+        $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY);
 
+        return ReceiptCategory::with([
+            'receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            },
+            'children.receipts' => function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            }
+        ])->get();
+    }
 
 }
