@@ -39,53 +39,46 @@ class StockController extends Controller
 
 
     public function getStocks()
-    {
-        //max 25 calls
-        $apiKey = config('services.api_stock_service.key');
-        $symbols = ["MSFT", "AAPL","KO","GM", "MCD","SPYL"];
-        $interval = "5min"; // Use a supported interval like 1min, 5min, 15min, etc.
-        $client = new Client();
-        try {
-            foreach ($symbols as $symbol) {
-                $apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval={$interval}&apikey={$apiKey}";
-                // Make a GET request
-                $response = $client->get($apiUrl); // Send the request
-                $data = json_decode($response->getBody(), true); // Decode the response to an associative array
-                if (!isset($data['Time Series (5min)'])) {
-                    // Skip if the response doesn't contain the necessary data
-                    continue;
-                }
+{
+    $apiKey = config('services.api_stock_service.key');
+    $symbols = ["MSFT", "AAPL", "KO", "GM", "MCD"];
+    $client = new Client();
 
-                $timeSeries = $data['Time Series (5min)'];
-                $firstKey = array_key_first($timeSeries); // Get the first datetime key
+    try {
+        foreach ($symbols as $symbol) {
+            // EODHD GLOBAL QUOTE endpoint
+            $apiUrl = "https://eodhd.com/api/real-time/{$symbol}?api_token={$apiKey}&fmt=json";
 
-                $stockSymbol = $data['Meta Data']['2. Symbol'];
-                $LastRefreshed = $data['Meta Data']['3. Last Refreshed'];
-                $LastRefreshed = date('d/m/Y', strtotime($LastRefreshed));
-                $high = $timeSeries[$firstKey]['2. high'];
-                $high = round($high, 0);
-                $volume = $timeSeries[$firstKey]['5. volume'];
-
-                // Insert or update stock data
-                $data = [
-                    'stockSymbol' => $stockSymbol,
-                    'LastRefreshed' => $LastRefreshed,
-                    'high' => $high,
-                    'volume' => $volume
-                ];
-
-                Stock::updateOrCreate(
-                    ['stockSymbol' => $stockSymbol],
-                    $data
-                );
+            $response = $client->get($apiUrl);
+            $data = json_decode($response->getBody(), true);
+        
+            if (!isset($data['close']) || !isset($data['volume'])) {
+                \Log::warning("Stock data missing for {$symbol}");
+                continue;
             }
-            return $stocks = Stock::all();
 
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return [];
+            $stockData = [
+                'stockSymbol'   => $symbol,
+                'LastRefreshed' => now()->format('d/m/Y'),
+                'high'          => round($data['high'], 2),
+                'volume'        => $data['volume'] ?? 0,
+            ];
+
+            Stock::updateOrCreate(
+                ['stockSymbol' => $symbol],
+                $stockData
+            );
+
+            usleep(200000);
         }
+
+        return Stock::all();
+
+    } catch (\Exception $e) {
+        \Log::error("Error fetching stocks: " . $e->getMessage());
+        return [];
     }
+}
 
 
 
